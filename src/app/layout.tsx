@@ -3,7 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import AppSidebar from "@/components/common/AppSidebar";
 import Navbar from "@/components/common/Navbar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import NotificationProvider from "@/context/notification-context";
 import { ThemeProvider } from "@/components/common/theme-provider";
 import { cookies } from "next/headers";
 
@@ -39,20 +40,22 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <NotificationProvider>
           <SidebarProvider defaultOpen={defaultOpen}>
-            <div className="flex min-h-screen overflow-hidden gap-10">
+            {/* <div className="flex min-h-screen overflow-hidden gap-10"> */}
               {/* Sidebar */}
               <AppSidebar />
 
               {/* Main Content */}
-              <main className="">
+              <SidebarInset className="ml-5 px-5">
                 <Navbar />
-                <div className="mt-36 ml-5">
+                  <div className="">
                   {children}
                 </div>
-              </main>
-            </div>
+              </SidebarInset>
+            {/* </div> */}
           </SidebarProvider>
+          </NotificationProvider>
         </ThemeProvider>
         </body>
     </html>

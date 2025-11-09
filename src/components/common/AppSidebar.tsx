@@ -6,6 +6,7 @@ import {
   Home,
   Inbox,
   LayoutDashboard,
+  LogOut,
   Plus,
   Projector,
   RssIcon,
@@ -46,7 +47,7 @@ const items = [
   },
   {
     title: "User",
-    url: "/#",
+    url: "/users",
     icon: Users,
   },
   {
@@ -114,26 +115,12 @@ const AppSidebar = () => {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className="h-16 text-lg font-medium">
-                  <User2 className="w-7 h-7 group-data-[collapsible=icon]:w-9 group-data-[collapsible=icon]:h-9" />
-                  <span className="text-lg font-medium group-data-[collapsible=icon]:hidden">Abdullah</span>
-                  <ChevronUp className="ml-auto w-6 h-6 group-data-[collapsible=icon]:hidden" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                side={state === "collapsed" ? "right" : "top"}
-                align={state === "collapsed" ? "center" : "end"}
-                className="text-base bg-sidebar"
-                sideOffset={5}
-              >
-                <DropdownMenuItem className="text-base py-2">Account</DropdownMenuItem>
-                <DropdownMenuItem className="text-base py-2">Settings</DropdownMenuItem>
-                <DropdownMenuItem className="text-base py-2">Signout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SidebarMenuButton asChild className="h-16 text-lg font-medium">
+              <Link href="#" className="flex items-center gap-4 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0">
+                <LogOut className="w-7 h-7 group-data-[collapsible=icon]:w-9 group-data-[collapsible=icon]:h-9 text-red-600" />
+                <span className="text-lg font-medium text-red-500">log Out</span>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

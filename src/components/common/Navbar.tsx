@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react'
 import { MessageSquare, Bell, User, Moon, Sun, Menu } from 'lucide-react';
 import { useSidebar } from "../ui/sidebar";
 import { useTheme } from "next-themes";
@@ -9,11 +10,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from 'next/link';
+import NotificationMenu from './NotificationMenu'
 
 const Navbar = () => {
   const { setTheme } = useTheme();
   const { toggleSidebar, state } = useSidebar();
   const sidebarOpen = state === "expanded";
+  const [showNotifications, setShowNotifications] = useState(false)
 
   return (
     <>
@@ -21,7 +25,7 @@ const Navbar = () => {
       <div className="fixed top-0 left-0 w-full h-5 bg-background z-50"></div>
 
       {/* Main navbar */}
-      <div className={`fixed top-5 right-0 z-40 h-[84px] flex justify-center items-center px-4 py-4 bg-sidebar rounded-lg rounded-t-none shadow-md mx-5 transition-all duration-300 ${sidebarOpen ? "md:left-78" : "md:left-22"}`}>
+      <div className={`fixed top-5 right-0 z-40 h-[84px] flex justify-center items-center p-4 bg-sidebar rounded-lg rounded-t-none shadow-md mx-5 transition-all duration-300 ${sidebarOpen ? "md:left-77" : "md:left-22"}`}>
         <div className="flex w-full justify-between items-center ml-5">
           {/* Left Section */}
           <div className="flex items-center gap-6">
@@ -66,16 +70,24 @@ const Navbar = () => {
             </DropdownMenu>
 
             {/* Messages */}
+            <Link href="/chats">
             <div className="flex w-[52px] h-[52px] items-center justify-center rounded-full border border-gray-900 dark:border-white bg-transparent hover:bg-white/10 cursor-pointer">
               <MessageSquare className="w-6 h-6 text-gray-900 dark:text-white" strokeWidth={2} />
             </div>
+            </Link>
 
             {/* Notifications */}
-            <div className="relative flex w-[52px] h-[52px] items-center justify-center rounded-full border border-gray-900 dark:border-white bg-transparent hover:bg-white/10 cursor-pointer">
-              <Bell className="w-6 h-6 text-gray-900 dark:text-white" strokeWidth={2} />
-              <div className="absolute top-2 right-2 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-normal">.</span>
-              </div>
+            <div className="relative">
+              <button
+                onClick={() => setShowNotifications((s) => !s)}
+                className="flex w-[52px] h-[52px] items-center justify-center rounded-full border border-gray-900 dark:border-white bg-transparent hover:bg-white/10 cursor-pointer"
+              >
+                <Bell className="w-6 h-6 text-gray-900 dark:text-white" strokeWidth={2} />
+                <div className="absolute top-2 right-2 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-normal">.</span>
+                </div>
+              </button>
+              <NotificationMenu open={showNotifications} onClose={() => setShowNotifications(false)} />
             </div>
 
             {/* Profile */}
@@ -87,7 +99,7 @@ const Navbar = () => {
       </div>
 
       {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="h-[104px]"></div>
+      <div className="py-15"></div>
     </>
   )
 }

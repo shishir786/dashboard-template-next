@@ -7,5 +7,16 @@ export function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  // Provide sensible defaults so theme works even if caller omits props.
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem={true}
+      enableColorScheme={true}
+      {...props}
+    >
+      {children}
+    </NextThemesProvider>
+  )
 }
