@@ -1,14 +1,20 @@
 "use client"
 
 import React from "react"
-import { useUsers } from "@/context/users-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { formatDistanceToNow } from "date-fns"
 
+// Local placeholder data so this component no longer depends on a shared UsersContext.
+// The user will implement their own API integration in this component later.
+const seedUsers = [
+  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
+  { id: '2', name: 'Bob Smith', email: 'bob@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) },
+  { id: '3', name: 'Carol Lee', email: 'carol@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10) },
+]
+
 export default function RecentUser({ max = 10 }: { max?: number }) {
-  const { getRecent } = useUsers()
-  const items = getRecent(max)
+  const items = seedUsers.slice(0, max)
 
   return (
     <Card>
@@ -27,7 +33,7 @@ export default function RecentUser({ max = 10 }: { max?: number }) {
                 {u.email && <div className="text-sm text-muted-foreground">{u.email}</div>}
               </div>
               <div className="text-xs text-muted-foreground">
-                {formatDistanceToNow(u.createdAt, { addSuffix: true })}
+                {formatDistanceToNow(u.createdAt as Date, { addSuffix: true })}
               </div>
             </div>
           ))}

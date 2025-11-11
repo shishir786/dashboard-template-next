@@ -1,6 +1,5 @@
 "use client"
 import RecentUser from '@/components/RecentUser'
-import { UsersProvider } from '@/context/users-context'
 import { UserRatio } from '@/components/UserRatio'
 import { Calendar } from '@/components/ui/calendar'
 import React from 'react'
@@ -55,9 +54,7 @@ const [date, setDate] = React.useState<Date | undefined>(new Date())
       </div>
 
       <div>
-        <UsersProvider>
-          <RecentUser />
-        </UsersProvider>
+        <RecentUser />
       </div>
     </>
   )
