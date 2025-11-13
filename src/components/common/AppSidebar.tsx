@@ -36,7 +36,7 @@ const items = [
   },
   {
     title: "Blog",
-    url: "#",
+    url: "/blogs",
     icon: RssIcon,
   },
   {
