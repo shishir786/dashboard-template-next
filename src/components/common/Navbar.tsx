@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex shrink-0 items-center gap-1.5 pr-0 md:gap-3 md:pr-2">
+          <div className="flex shrink-0 items-center gap-1.5 mr-2 pr-0 md:gap-3 md:pr-2 ">
             {/* Theme Toggle */}
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
