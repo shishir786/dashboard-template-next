@@ -62,14 +62,14 @@ export function UserRatio() {
 
   return (
     <Card className="h-full dark:border-[#F4B057]">
-      <CardHeader>
-        <div className="flex items-center justify-between w-full">
-          <div>
-            <CardTitle>User Ratio</CardTitle>
-            <CardDescription>{`January - December ${year}`}</CardDescription>
+      <CardHeader className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-3 sm:gap-0">
+          <div className="min-w-0 flex-1">
+            <CardTitle className="text-base sm:text-lg">User Ratio</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">{`January - December ${year}`}</CardDescription>
           </div>
 
-          <div>
+          <div className="w-full sm:w-auto">
             <label htmlFor="year-select" className="sr-only">
               Select year
             </label>
@@ -77,7 +77,7 @@ export function UserRatio() {
               id="year-select"
               value={String(year)}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="rounded-md border px-2 py-1 text-sm bg-sidebar"
+              className="rounded-md border px-3 py-1.5 text-sm bg-sidebar w-full sm:w-auto"
             >
               {years.map((y) => (
                 <option key={y} value={y}>
@@ -88,19 +88,27 @@ export function UserRatio() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="h-full">
+      <CardContent className="h-full p-2 sm:p-4 md:p-6">
         <ChartContainer config={chartConfig} className="h-full aspect-auto">
-          <BarChart accessibilityLayer data={chartData} barCategoryGap="30%" barGap={4}>
+          <BarChart
+            accessibilityLayer
+            data={chartData}
+            barCategoryGap="20%"
+            barGap={2}
+            margin={{ left: -20, right: 10, top: 10, bottom: 0 }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
               tickLine={false}
-              tickMargin={10}
+              tickMargin={8}
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
+              tick={{ fontSize: 12 }}
+              className="text-xs sm:text-sm"
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={6} />
+            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

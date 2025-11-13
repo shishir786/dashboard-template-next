@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Search, Send, ArrowLeft } from 'lucide-react'
 
-// Simple demo-only chat page. Removed redux/api/socket/i18n — uses local demo data only.
 export default function MessagePage() {
   const demoCurrentUserId = 'me'
 
@@ -42,12 +41,10 @@ export default function MessagePage() {
   const messagesContainerRef = useRef(null)
 
   useEffect(() => {
-    // auto-select first on mount if none
     if (!selectedConversationId && conversations.length) setSelectedConversationId(conversations[0]._id)
   }, [])
 
   useEffect(() => {
-    // scroll to bottom when messages change
     const el = messagesContainerRef.current
     if (!el) return
     const id = setTimeout(() => {
@@ -94,7 +91,6 @@ export default function MessagePage() {
 
   const handleBackToConversations = () => {
     setShowChat(false)
-    // on mobile we may want to keep selectedConversationId
   }
 
   return (

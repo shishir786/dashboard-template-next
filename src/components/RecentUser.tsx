@@ -74,12 +74,12 @@ export default function RecentUser() {
   return (
     <div className="bg-card rounded-lg border border-border overflow-hidden dark:border-[#F4B057]">
       {/* Header */}
-      <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-semibold text-foreground">Recent Users</h2>
+      <div className="p-3 sm:p-4 border-b border-border">
+        <h2 className="text-base sm:text-lg font-semibold text-foreground">Recent Users</h2>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full">
           <thead className="bg-primary">
             <tr>
@@ -161,16 +161,74 @@ export default function RecentUser() {
         </table>
       </div>
 
+      {/* Mobile Card View */}
+      <div className="md:hidden p-3 space-y-3">
+        {users.map((user) => (
+          <div key={user.id} className="bg-muted/30 rounded-lg p-3 space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <Avatar className="h-10 w-10 flex-shrink-0">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm text-foreground truncate">{user.name}</h3>
+                  <p className="text-xs text-muted-foreground">{user.id}</p>
+                </div>
+              </div>
+              <div className="flex gap-1.5 flex-shrink-0">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                  title="Block User"
+                  onClick={() => setBlockUser(user)}
+                >
+                  <Ban className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                  title="View Details"
+                  onClick={() => setSelectedUser(user)}
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-1.5 text-xs">
+              <div className="flex justify-between gap-2">
+                <span className="text-muted-foreground">Email:</span>
+                <span className="text-foreground truncate">{user.email}</span>
+              </div>
+              <div className="flex justify-between gap-2">
+                <span className="text-muted-foreground">Phone:</span>
+                <span className="text-foreground">{user.phone}</span>
+              </div>
+              <div className="flex justify-between gap-2">
+                <span className="text-muted-foreground">Type:</span>
+                <span className="text-foreground">{user.userType}</span>
+              </div>
+              <div className="flex justify-between gap-2">
+                <span className="text-muted-foreground">Joined:</span>
+                <span className="text-foreground">{user.joinedDate}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Pagination */}
-      <div className="p-4 border-t border-border flex items-center justify-end gap-2">
+      <div className="p-3 sm:p-4 border-t border-border flex items-center justify-center sm:justify-end gap-2">
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-7 w-7 sm:h-8 sm:w-8"
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
 
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -178,7 +236,7 @@ export default function RecentUser() {
             key={page}
             variant={currentPage === page ? "default" : "outline"}
             size="icon"
-            className="h-8 w-8"
+            className="h-7 w-7 sm:h-8 sm:w-8 text-xs sm:text-sm"
             onClick={() => setCurrentPage(page)}
           >
             {page}
@@ -188,11 +246,11 @@ export default function RecentUser() {
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-7 w-7 sm:h-8 sm:w-8"
           onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
       </div>
 
