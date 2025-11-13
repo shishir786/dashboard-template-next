@@ -5,6 +5,9 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { ArrowLeft, Search, Eye, Ban, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import BlockedUsersModal from "@/components/common/modals/BlockedUsersModal"
+import UserDetailsModal from "@/components/common/modals/UserDetailsModal"
+import BlockUserModal from "@/components/common/modals/BlockUserModal"
 
 const seedUsers = [
   { id: '1', name: 'John Doe', phone: '123-456-7890', joinedAt: '2023-01-01', email: 'jdfkfdsaf@gmail.com', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' },
@@ -16,7 +19,15 @@ const seedUsers = [
   { id: '7', name: 'David Lee', phone: '666-777-8888', joinedAt: '2023-07-25', email: 'davidlee@email.com', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David' },
 ]
 
-function UsersTable({ users, onBlockUser }: { users: typeof seedUsers, onBlockUser: (id: string) => void }) {
+function UsersTable({
+  users,
+  onViewUser,
+  onBlockUser
+}: {
+  users: typeof seedUsers
+  onViewUser: (user: User) => void
+  onBlockUser: (user: User) => void
+}) {
   return (
     <div className="bg-card rounded-b-lg shadow-sm border border-border overflow-hidden">
       <div className="overflow-x-auto">
@@ -53,7 +64,7 @@ function UsersTable({ users, onBlockUser }: { users: typeof seedUsers, onBlockUs
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                      onClick={() => onBlockUser(u.id)}
+                      onClick={() => onBlockUser(u)}
                       title="Block User"
                     >
                       <Ban className="h-4 w-4" />
@@ -62,6 +73,7 @@ function UsersTable({ users, onBlockUser }: { users: typeof seedUsers, onBlockUs
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                      onClick={() => onViewUser(u)}
                       title="View Details"
                     >
                       <Eye className="h-4 w-4" />
@@ -77,24 +89,46 @@ function UsersTable({ users, onBlockUser }: { users: typeof seedUsers, onBlockUs
   )
 }
 
+type User = typeof seedUsers[0]
+
 export default function UsersPage() {
   const [users, setUsers] = React.useState(seedUsers)
+  const [blockedUsers, setBlockedUsers] = React.useState<User[]>([])
   const [query, setQuery] = React.useState('')
   const [activeTab, setActiveTab] = React.useState<'clients' | 'providers'>('providers')
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
+  const [blockUser, setBlockUser] = React.useState<User | null>(null)
+  const [showBlockedUsers, setShowBlockedUsers] = React.useState(false)
 
   const filtered = users.filter((u) =>
     u.name.toLowerCase().includes(query.toLowerCase()) ||
     u.email.toLowerCase().includes(query.toLowerCase())
   )
 
-  function blockUser(id: string) {
-    setUsers((prev) => prev.filter((u) => u.id !== id))
+  function handleBlockConfirm() {
+    if (blockUser) {
+      setBlockedUsers((prev) => [...prev, blockUser])
+      setUsers((prev) => prev.filter((u) => u.id !== blockUser.id))
+      setBlockUser(null)
+    }
+  }
+
+  function handleUnblock(id: string) {
+    const user = blockedUsers.find((u) => u.id === id)
+    if (user) {
+      setUsers((prev) => [...prev, user])
+      setBlockedUsers((prev) => prev.filter((u) => u.id !== id))
+    }
+  }
+
+  function handleDelete(id: string) {
+    setBlockedUsers((prev) => prev.filter((u) => u.id !== id))
   }
 
   return (
     <div className="min-h-screen bg-background">
       {/* Top header */}
-      <div className="bg-custom text-primary-foreground p-4 rounded-t-lg flex items-center justify-between">
+      <div className="bg-primary text-primary-foreground p-4 rounded-t-lg flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10">
             <ArrowLeft className="h-5 w-5" />
@@ -108,11 +142,15 @@ export default function UsersPage() {
               placeholder="Search User"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-9 bg-sidebar text-sidebar w-64 border-primary-foreground/20"
+              className="pl-9 bg-background text-foreground w-64 border-primary-foreground/20"
             />
           </div>
-          <Button variant="secondary" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-            Blocked Users
+          <Button
+            variant="secondary"
+            className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+            onClick={() => setShowBlockedUsers(true)}
+          >
+            Blocked Users ({blockedUsers.length})
           </Button>
         </div>
       </div>
@@ -136,17 +174,48 @@ export default function UsersPage() {
               Providers
             </Button>
           </div>
-          <Button variant="outline" className="gap-2">
-            <span className="text-sm">date</span>
-            <ChevronDown className="h-4 w-4" />
-          </Button>
+
         </div>
       </div>
 
       {/* Table area */}
       <div>
-        <UsersTable users={filtered} onBlockUser={blockUser} />
+        <UsersTable
+          users={filtered}
+          onViewUser={setSelectedUser}
+          onBlockUser={setBlockUser}
+        />
       </div>
+
+      {/* View User Modal */}
+      <UserDetailsModal
+        open={!!selectedUser}
+        onClose={() => setSelectedUser(null)}
+        user={selectedUser}
+        onBlock={() => {
+          if (selectedUser) {
+            setBlockUser(selectedUser)
+            setSelectedUser(null)
+          }
+        }}
+      />
+
+      {/* Block User Modal */}
+      <BlockUserModal
+        open={!!blockUser}
+        onClose={() => setBlockUser(null)}
+        user={blockUser}
+        onConfirm={handleBlockConfirm}
+      />
+
+      {/* Blocked Users Modal */}
+      <BlockedUsersModal
+        open={showBlockedUsers}
+        onClose={() => setShowBlockedUsers(false)}
+        blockedUsers={blockedUsers}
+        onUnblock={handleUnblock}
+        onDelete={handleDelete}
+      />
     </div>
   )
 }

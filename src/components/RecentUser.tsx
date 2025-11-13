@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react"
+import UserDetailsModal from "@/components/common/modals/UserDetailsModal"
+import BlockUserModal from "@/components/common/modals/BlockUserModal"
 
 const recentUsers = [
   {
@@ -53,9 +55,21 @@ const recentUsers = [
   },
 ]
 
+type User = typeof recentUsers[0]
+
 export default function RecentUser() {
   const [currentPage, setCurrentPage] = useState(1)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [blockUser, setBlockUser] = useState<User | null>(null)
+  const [users, setUsers] = useState(recentUsers)
   const totalPages = 3
+
+  const handleBlockConfirm = () => {
+    if (blockUser) {
+      setUsers(users.filter(u => u.id !== blockUser.id))
+      setBlockUser(null)
+    }
+  }
 
   return (
     <div className="bg-card rounded-lg border border-border overflow-hidden dark:border-[#F4B057]">
@@ -93,7 +107,7 @@ export default function RecentUser() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {recentUsers.map((user) => (
+            {users.map((user) => (
               <tr key={user.id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">
                   {user.id}
@@ -126,6 +140,7 @@ export default function RecentUser() {
                       size="icon"
                       className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                       title="Block User"
+                      onClick={() => setBlockUser(user)}
                     >
                       <Ban className="h-4 w-4" />
                     </Button>
@@ -134,6 +149,7 @@ export default function RecentUser() {
                       size="icon"
                       className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
                       title="View Details"
+                      onClick={() => setSelectedUser(user)}
                     >
                       <Eye className="h-4 w-4" />
                     </Button>
@@ -179,6 +195,27 @@ export default function RecentUser() {
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
+
+      {/* View User Modal */}
+      <UserDetailsModal
+        open={!!selectedUser}
+        onClose={() => setSelectedUser(null)}
+        user={selectedUser}
+        onBlock={() => {
+          if (selectedUser) {
+            setBlockUser(selectedUser)
+            setSelectedUser(null)
+          }
+        }}
+      />
+
+      {/* Block User Confirmation Modal */}
+      <BlockUserModal
+        open={!!blockUser}
+        onClose={() => setBlockUser(null)}
+        user={blockUser}
+        onConfirm={handleBlockConfirm}
+      />
     </div>
   )
 }
