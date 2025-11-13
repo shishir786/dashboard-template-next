@@ -1,136 +1,141 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react"
-import UserDetailsModal from "@/components/common/modals/UserDetailsModal"
-import BlockUserModal from "@/components/common/modals/BlockUserModal"
+import { useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react";
+import UserDetailsModal from "@/components/common/modals/UserDetailsModal";
+import BlockUserModal from "@/components/common/modals/BlockUserModal";
 
 const recentUsers = [
   {
-    id: 'S001',
-    name: 'DS',
-    email: 'ds@example.com',
-    phone: '123-456-7890',
-    userType: 'Admin',
-    joinedDate: '1/10/2023',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DS'
+    id: "S001",
+    name: "DS",
+    email: "ds@example.com",
+    phone: "123-456-7890",
+    userType: "Admin",
+    joinedDate: "1/10/2023",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DS",
   },
   {
-    id: 'S002',
-    name: 'Jane Doe',
-    email: 'janedoe@example.com',
-    phone: '234-567-8901',
-    userType: 'User',
-    joinedDate: '3/15/2023',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane'
+    id: "S002",
+    name: "Jane Doe",
+    email: "janedoe@example.com",
+    phone: "234-567-8901",
+    userType: "User",
+    joinedDate: "3/15/2023",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
   },
   {
-    id: 'S003',
-    name: 'John Smith',
-    email: 'johnsmith@example.com',
-    phone: '345-678-9012',
-    userType: 'User',
-    joinedDate: '5/22/2023',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John'
+    id: "S003",
+    name: "John Smith",
+    email: "johnsmith@example.com",
+    phone: "345-678-9012",
+    userType: "User",
+    joinedDate: "5/22/2023",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
   },
   {
-    id: 'S004',
-    name: 'Alice Johnson',
-    email: 'alicej@example.com',
-    phone: '456-789-0123',
-    userType: 'Moderator',
-    joinedDate: '7/3/2023',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice'
+    id: "S004",
+    name: "Alice Johnson",
+    email: "alicej@example.com",
+    phone: "456-789-0123",
+    userType: "Moderator",
+    joinedDate: "7/3/2023",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice",
   },
   {
-    id: 'S005',
-    name: 'Bob Brown',
-    email: 'bobb@example.com',
-    phone: '567-890-1234',
-    userType: 'User',
-    joinedDate: '9/18/2023',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob'
+    id: "S005",
+    name: "Bob Brown",
+    email: "bobb@example.com",
+    phone: "567-890-1234",
+    userType: "User",
+    joinedDate: "9/18/2023",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob",
   },
-]
+];
 
-type User = typeof recentUsers[0]
+type User = (typeof recentUsers)[0];
 
 export default function RecentUser() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [blockUser, setBlockUser] = useState<User | null>(null)
-  const [users, setUsers] = useState(recentUsers)
-  const totalPages = 3
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [blockUser, setBlockUser] = useState<User | null>(null);
+  const [users, setUsers] = useState(recentUsers);
+  const totalPages = 3;
 
   const handleBlockConfirm = () => {
     if (blockUser) {
-      setUsers(users.filter(u => u.id !== blockUser.id))
-      setBlockUser(null)
+      setUsers(users.filter((u) => u.id !== blockUser.id));
+      setBlockUser(null);
     }
-  }
+  };
 
   return (
-    <div className="bg-card rounded-lg border border-border overflow-hidden dark:border-[#F4B057]">
+    <div className="bg-card border-border overflow-hidden rounded-lg border dark:border-[#F4B057]">
       {/* Header */}
-      <div className="p-3 sm:p-4 border-b border-border">
-        <h2 className="text-base sm:text-lg font-semibold text-foreground">Recent Users</h2>
+      <div className="border-border border-b p-3 sm:p-4">
+        <h2 className="text-foreground text-base font-semibold sm:text-lg">Recent Users</h2>
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full">
           <thead className="bg-primary">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 S.ID
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 Full Name
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 Email
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 Phone No
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 User Type
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 Joined Date
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+              <th className="text-primary-foreground px-6 py-3 text-left text-xs font-medium tracking-wider uppercase">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-border divide-y">
             {users.map((user) => (
               <tr key={user.id} className="hover:bg-muted/30 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">
+                <td className="text-foreground px-6 py-4 text-sm font-medium whitespace-nowrap">
                   {user.id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.avatar} alt={user.name} />
-                      <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                      <AvatarFallback>
+                        {user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
                     </Avatar>
-                    <span className="text-sm text-foreground">{user.name}</span>
+                    <span className="text-foreground text-sm">{user.name}</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                   {user.email}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                   {user.phone}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                   {user.userType}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                   {user.joinedDate}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -138,7 +143,7 @@ export default function RecentUser() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
                       title="Block User"
                       onClick={() => setBlockUser(user)}
                     >
@@ -147,7 +152,7 @@ export default function RecentUser() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                      className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
                       title="View Details"
                       onClick={() => setSelectedUser(user)}
                     >
@@ -162,25 +167,30 @@ export default function RecentUser() {
       </div>
 
       {/* Mobile Card View */}
-      <div className="md:hidden p-3 space-y-3">
+      <div className="space-y-3 p-3 md:hidden">
         {users.map((user) => (
-          <div key={user.id} className="bg-muted/30 rounded-lg p-3 space-y-3">
+          <div key={user.id} className="bg-muted/30 space-y-3 rounded-lg p-3">
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="flex min-w-0 flex-1 items-center gap-3">
                 <Avatar className="h-10 w-10 flex-shrink-0">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  <AvatarFallback>
+                    {user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
                 </Avatar>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm text-foreground truncate">{user.name}</h3>
-                  <p className="text-xs text-muted-foreground">{user.id}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-foreground truncate text-sm font-semibold">{user.name}</h3>
+                  <p className="text-muted-foreground text-xs">{user.id}</p>
                 </div>
               </div>
-              <div className="flex gap-1.5 flex-shrink-0">
+              <div className="flex flex-shrink-0 gap-1.5">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
                   title="Block User"
                   onClick={() => setBlockUser(user)}
                 >
@@ -189,7 +199,7 @@ export default function RecentUser() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                  className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
                   title="View Details"
                   onClick={() => setSelectedUser(user)}
                 >
@@ -220,7 +230,7 @@ export default function RecentUser() {
       </div>
 
       {/* Pagination */}
-      <div className="p-3 sm:p-4 border-t border-border flex items-center justify-center sm:justify-end gap-2">
+      <div className="border-border flex items-center justify-center gap-2 border-t p-3 sm:justify-end sm:p-4">
         <Button
           variant="outline"
           size="icon"
@@ -236,7 +246,7 @@ export default function RecentUser() {
             key={page}
             variant={currentPage === page ? "default" : "outline"}
             size="icon"
-            className="h-7 w-7 sm:h-8 sm:w-8 text-xs sm:text-sm"
+            className="h-7 w-7 text-xs sm:h-8 sm:w-8 sm:text-sm"
             onClick={() => setCurrentPage(page)}
           >
             {page}
@@ -261,8 +271,8 @@ export default function RecentUser() {
         user={selectedUser}
         onBlock={() => {
           if (selectedUser) {
-            setBlockUser(selectedUser)
-            setSelectedUser(null)
+            setBlockUser(selectedUser);
+            setSelectedUser(null);
           }
         }}
       />
@@ -275,5 +285,5 @@ export default function RecentUser() {
         onConfirm={handleBlockConfirm}
       />
     </div>
-  )
+  );
 }

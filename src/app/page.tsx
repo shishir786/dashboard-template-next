@@ -1,53 +1,53 @@
-"use client"
-import RecentUser from '@/components/RecentUser'
-import { UserRatio } from '@/components/UserRatio'
-import { Calendar } from '@/components/ui/calendar'
-import React from 'react'
+"use client";
+import RecentUser from "@/components/RecentUser";
+import { UserRatio } from "@/components/UserRatio";
+import { Calendar } from "@/components/ui/calendar";
+import React from "react";
 
 const Dashbaord = () => {
-const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const [date, setDate] = React.useState<Date | undefined>(new Date());
   return (
     <div className="px-4 sm:px-0">
       {/* upper 2 blocks */}
       <div
-        className="w-full flex bg-sidebar rounded-lg shadow-sm items-center justify-center border border-[#E2E8F0] dark:border-[#F4B057] py-4 sm:py-6"
+        className="bg-sidebar flex w-full items-center justify-center rounded-lg border border-[#E2E8F0] py-4 shadow-sm sm:py-6 dark:border-[#F4B057]"
         style={{ minHeight: "110px" }}
       >
-        <div className="flex-1 flex flex-col items-center justify-center px-2">
-          <p className="text-[#0D2357] dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">
+        <div className="flex flex-1 flex-col items-center justify-center px-2">
+          <p className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white">
             7.8k
           </p>
-          <span className="text-[#0D2357] dark:text-white text-xs sm:text-sm md:text-base lg:text-lg font-medium text-center">
+          <span className="text-center text-xs font-medium text-[#0D2357] sm:text-sm md:text-base lg:text-lg dark:text-white">
             Total Distributor
           </span>
         </div>
-        <div className="w-px h-12 sm:h-14 md:h-16 bg-[#F4B057] mx-3 sm:mx-4 md:mx-6 lg:mx-8" />
-        <div className="flex-1 flex flex-col items-center justify-center px-2">
-          <p className="text-[#0D2357] dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">
+        <div className="mx-3 h-12 w-px bg-[#F4B057] sm:mx-4 sm:h-14 md:mx-6 md:h-16 lg:mx-8" />
+        <div className="flex flex-1 flex-col items-center justify-center px-2">
+          <p className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white">
             249
           </p>
-          <span className="text-[#0D2357] dark:text-white text-xs sm:text-sm md:text-base lg:text-lg font-medium text-center">
+          <span className="text-center text-xs font-medium text-[#0D2357] sm:text-sm md:text-base lg:text-lg dark:text-white">
             Total Employer
           </span>
         </div>
       </div>
 
       {/* user ratio and calendar side-by-side */}
-      <div className="mt-4 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto]">
         {/* Chart: flexible column */}
-        <div className="h-[350px] sm:h-[400px] w-full">
+        <div className="h-[350px] w-full sm:h-[400px]">
           <UserRatio />
         </div>
 
         {/* Calendar: narrower column and padded card */}
         <div className="flex justify-center lg:justify-start">
-          <div className="h-[350px] sm:h-[400px] w-full sm:w-[320px]">
-            <div className="h-full w-full border border-border rounded-lg bg-card overflow-hidden p-3 sm:p-5 dark:border-[#F4B057]">
+          <div className="h-[350px] w-full sm:h-[400px] sm:w-[320px]">
+            <div className="border-border bg-card h-full w-full overflow-hidden rounded-lg border p-3 sm:p-5 dark:border-[#F4B057]">
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-lg border bg-sidebar h-full w-full"
+                className="bg-sidebar h-full w-full rounded-lg border"
               />
             </div>
           </div>
@@ -58,7 +58,7 @@ const [date, setDate] = React.useState<Date | undefined>(new Date())
         <RecentUser />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashbaord
+export default Dashbaord;

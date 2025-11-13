@@ -34,6 +34,7 @@ RootLayout
 #### RootLayout (`src/app/layout.tsx`)
 
 **Current Structure:**
+
 ```tsx
 <body className="flex">
   <AppSidebar />
@@ -45,6 +46,7 @@ RootLayout
 ```
 
 **New Structure:**
+
 ```tsx
 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
   <SidebarProvider>
@@ -58,6 +60,7 @@ RootLayout
 ```
 
 **Changes:**
+
 - Import `SidebarProvider` from `@/components/ui/sidebar`
 - Remove `flex` class from body (SidebarProvider's wrapper div handles layout)
 - Wrap AppSidebar and main content with SidebarProvider
@@ -66,11 +69,13 @@ RootLayout
 ### SidebarProvider Configuration
 
 **Props to use:**
+
 - `defaultOpen={true}`: Sidebar starts expanded on desktop
 - No additional props needed initially (provider handles mobile detection, state persistence, keyboard shortcuts automatically)
 
 **Provided Context:**
 The SidebarProvider automatically provides:
+
 - `state`: "expanded" | "collapsed"
 - `open`: boolean for desktop state
 - `openMobile`: boolean for mobile state
@@ -91,19 +96,20 @@ No new data models required. The sidebar state is managed internally by SidebarP
 
 ```typescript
 type SidebarContextProps = {
-  state: "expanded" | "collapsed"
-  open: boolean
-  setOpen: (open: boolean) => void
-  openMobile: boolean
-  setOpenMobile: (open: boolean) => void
-  isMobile: boolean
-  toggleSidebar: () => void
-}
+  state: "expanded" | "collapsed";
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  openMobile: boolean;
+  setOpenMobile: (open: boolean) => void;
+  isMobile: boolean;
+  toggleSidebar: () => void;
+};
 ```
 
 ## Error Handling
 
 ### Current Error
+
 ```
 Error: useSidebar must be used within a SidebarProvider.
 ```

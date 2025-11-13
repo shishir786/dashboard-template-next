@@ -1,30 +1,25 @@
-"use client"
+"use client";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { UserCheck, Trash2 } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { UserCheck, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface User {
-  id: string
-  name: string
-  email: string
-  phone: string
-  joinedAt: string
-  avatar: string
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  joinedAt: string;
+  avatar: string;
 }
 
 interface BlockedUsersModalProps {
-  open: boolean
-  onClose: () => void
-  blockedUsers: User[]
-  onUnblock: (id: string) => void
-  onDelete: (id: string) => void
+  open: boolean;
+  onClose: () => void;
+  blockedUsers: User[];
+  onUnblock: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 export default function BlockedUsersModal({
@@ -36,7 +31,7 @@ export default function BlockedUsersModal({
 }: BlockedUsersModalProps) {
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()} modal={false}>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh]">
+      <DialogContent className="max-h-[80vh] sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Blocked Users ({blockedUsers.length})
@@ -45,50 +40,41 @@ export default function BlockedUsersModal({
 
         {blockedUsers.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted mb-4">
-              <UserCheck className="h-8 w-8 text-muted-foreground" />
+            <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+              <UserCheck className="text-muted-foreground h-8 w-8" />
             </div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              No Blocked Users
-            </h3>
-            <p className="text-sm text-muted-foreground max-w-sm">
+            <h3 className="text-foreground mb-2 text-lg font-semibold">No Blocked Users</h3>
+            <p className="text-muted-foreground max-w-sm text-sm">
               You haven't blocked any users yet. Blocked users will appear here.
             </p>
           </div>
         ) : (
-          <div className="overflow-y-auto max-h-[60vh]">
+          <div className="max-h-[60vh] overflow-y-auto">
             <div className="space-y-3">
               {blockedUsers.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:bg-muted/30 transition-colors"
+                  className="border-border bg-card hover:bg-muted/30 flex items-center justify-between rounded-lg border p-4 transition-colors"
                 >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="flex min-w-0 flex-1 items-center gap-4">
                     <Avatar className="h-12 w-12 flex-shrink-0">
                       <AvatarImage src={user.avatar} alt={user.name} />
                       <AvatarFallback>
-                        {user.name.split(' ').map(n => n[0]).join('')}
+                        {user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-foreground truncate">
-                        {user.name}
-                      </h4>
-                      <p className="text-sm text-muted-foreground truncate">
-                        {user.email}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {user.phone}
-                      </p>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-foreground truncate font-semibold">{user.name}</h4>
+                      <p className="text-muted-foreground truncate text-sm">{user.email}</p>
+                      <p className="text-muted-foreground text-xs">{user.phone}</p>
                     </div>
                   </div>
-                  <div className="flex gap-2 ml-4 flex-shrink-0">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onUnblock(user.id)}
-                    >
-                      <UserCheck className="h-4 w-4 mr-2" />
+                  <div className="ml-4 flex flex-shrink-0 gap-2">
+                    <Button variant="outline" size="sm" onClick={() => onUnblock(user.id)}>
+                      <UserCheck className="mr-2 h-4 w-4" />
                       Unblock
                     </Button>
                     <Button
@@ -106,12 +92,12 @@ export default function BlockedUsersModal({
           </div>
         )}
 
-        <div className="flex justify-end pt-4 border-t border-border">
+        <div className="border-border flex justify-end border-t pt-4">
           <Button variant="outline" onClick={onClose}>
             Close
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

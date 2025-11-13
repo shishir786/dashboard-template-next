@@ -8,75 +8,116 @@ import { Input } from "@/components/ui/input";
 import BlockedUsersModal from "@/components/common/modals/BlockedUsersModal";
 import UserDetailsModal from "@/components/common/modals/UserDetailsModal";
 import BlockUserModal from "@/components/common/modals/BlockUserModal";
+import CreateAdminModal from "@/components/common/modals/CreateAdminModal";
 
-const seedUsers = [
+const seedAdmins = [
   {
     id: "1",
-    name: "John Doe",
+    name: "Admin John",
     phone: "123-456-7890",
     joinedAt: "2023-01-01",
-    email: "jdfkfdsaf@gmail.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    email: "admin.john@gmail.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminJohn",
   },
   {
     id: "2",
-    name: "Jane Smith",
+    name: "Admin Jane",
     phone: "987-654-3210",
     joinedAt: "2023-02-15",
-    email: "janesmith@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
+    email: "admin.jane@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminJane",
   },
   {
     id: "3",
-    name: "Robert Brown",
+    name: "Admin Robert",
     phone: "555-123-4567",
     joinedAt: "2023-03-10",
-    email: "robertbrown@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
+    email: "admin.robert@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminRobert",
   },
   {
     id: "4",
-    name: "Emily Clark",
+    name: "Admin Emily",
     phone: "444-555-6666",
     joinedAt: "2023-04-20",
-    email: "emilyclark@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
+    email: "admin.emily@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminEmily",
   },
   {
     id: "5",
-    name: "Michael Johnson",
+    name: "Admin Michael",
     phone: "222-333-4444",
     joinedAt: "2023-05-30",
-    email: "michaeljohnson@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+    email: "admin.michael@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminMichael",
   },
   {
     id: "6",
-    name: "Sarah Williams",
+    name: "Admin Sarah",
     phone: "333-444-5555",
     joinedAt: "2023-06-15",
-    email: "sarahwilliams@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    email: "admin.sarah@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminSarah",
   },
   {
     id: "7",
-    name: "David Lee",
+    name: "Admin David",
     phone: "666-777-8888",
     joinedAt: "2023-07-25",
-    email: "davidlee@email.com",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
+    email: "admin.david@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminDavid",
+  },
+  {
+    id: "8",
+    name: "Admin Lisa",
+    phone: "777-888-9999",
+    joinedAt: "2023-08-10",
+    email: "admin.lisa@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminLisa",
+  },
+  {
+    id: "9",
+    name: "Admin Tom",
+    phone: "888-999-0000",
+    joinedAt: "2023-09-05",
+    email: "admin.tom@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminTom",
+  },
+  {
+    id: "10",
+    name: "Admin Anna",
+    phone: "999-000-1111",
+    joinedAt: "2023-10-20",
+    email: "admin.anna@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminAnna",
+  },
+  {
+    id: "11",
+    name: "Admin Chris",
+    phone: "111-222-3333",
+    joinedAt: "2023-11-12",
+    email: "admin.chris@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminChris",
+  },
+  {
+    id: "12",
+    name: "Admin Maria",
+    phone: "222-333-4444",
+    joinedAt: "2023-12-01",
+    email: "admin.maria@email.com",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminMaria",
   },
 ];
 
-function UsersTable({
-  users,
-  onViewUser,
-  onBlockUser,
+function AdminsTable({
+  admins,
+  onViewAdmin,
+  onBlockAdmin,
   startIndex,
 }: {
-  users: typeof seedUsers;
-  onViewUser: (user: User) => void;
-  onBlockUser: (user: User) => void;
+  admins: typeof seedAdmins;
+  onViewAdmin: (admin: Admin) => void;
+  onBlockAdmin: (admin: Admin) => void;
   startIndex: number;
 }) {
   return (
@@ -91,7 +132,7 @@ function UsersTable({
                   No
                 </th>
                 <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
-                  User Name
+                  Admin Name
                 </th>
                 <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Phone Number
@@ -108,33 +149,33 @@ function UsersTable({
               </tr>
             </thead>
             <tbody className="divide-border divide-y">
-              {users.map((u, idx) => (
-                <tr key={u.id} className="hover:bg-muted/30 transition-colors">
+              {admins.map((a, idx) => (
+                <tr key={a.id} className="hover:bg-muted/30 transition-colors">
                   <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                     {startIndex + idx + 1}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10">
-                        <AvatarImage src={u.avatar} alt={u.name} />
+                        <AvatarImage src={a.avatar} alt={a.name} />
                         <AvatarFallback>
-                          {u.name
+                          {a.name
                             .split(" ")
                             .map((n) => n[0])
                             .join("")}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-foreground text-sm font-medium">{u.name}</span>
+                      <span className="text-foreground text-sm font-medium">{a.name}</span>
                     </div>
                   </td>
                   <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
-                    {u.phone}
+                    {a.phone}
                   </td>
                   <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
-                    {u.joinedAt}
+                    {a.joinedAt}
                   </td>
                   <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
-                    {u.email}
+                    {a.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
@@ -142,8 +183,8 @@ function UsersTable({
                         variant="ghost"
                         size="icon"
                         className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
-                        onClick={() => onBlockUser(u)}
-                        title="Block User"
+                        onClick={() => onBlockAdmin(a)}
+                        title="Block Admin"
                       >
                         <Ban className="h-4 w-4" />
                       </Button>
@@ -151,7 +192,7 @@ function UsersTable({
                         variant="ghost"
                         size="icon"
                         className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
-                        onClick={() => onViewUser(u)}
+                        onClick={() => onViewAdmin(a)}
                         title="View Details"
                       >
                         <Eye className="h-4 w-4" />
@@ -167,21 +208,21 @@ function UsersTable({
 
       {/* Mobile/Tablet Card View */}
       <div className="space-y-3 p-4 md:hidden">
-        {users.map((u, idx) => (
-          <div key={u.id} className="bg-card border-border space-y-3 rounded-lg border p-4">
+        {admins.map((a, idx) => (
+          <div key={a.id} className="bg-card border-border space-y-3 rounded-lg border p-4">
             <div className="flex items-start justify-between">
               <div className="flex min-w-0 flex-1 items-center gap-3">
                 <Avatar className="h-12 w-12 flex-shrink-0">
-                  <AvatarImage src={u.avatar} alt={u.name} />
+                  <AvatarImage src={a.avatar} alt={a.name} />
                   <AvatarFallback>
-                    {u.name
+                    {a.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-foreground truncate font-semibold">{u.name}</h3>
+                  <h3 className="text-foreground truncate font-semibold">{a.name}</h3>
                   <p className="text-muted-foreground text-xs">#{startIndex + idx + 1}</p>
                 </div>
               </div>
@@ -190,8 +231,8 @@ function UsersTable({
                   variant="ghost"
                   size="icon"
                   className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
-                  onClick={() => onBlockUser(u)}
-                  title="Block User"
+                  onClick={() => onBlockAdmin(a)}
+                  title="Block Admin"
                 >
                   <Ban className="h-4 w-4" />
                 </Button>
@@ -199,7 +240,7 @@ function UsersTable({
                   variant="ghost"
                   size="icon"
                   className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
-                  onClick={() => onViewUser(u)}
+                  onClick={() => onViewAdmin(a)}
                   title="View Details"
                 >
                   <Eye className="h-4 w-4" />
@@ -209,15 +250,15 @@ function UsersTable({
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Email:</span>
-                <span className="text-foreground ml-2 truncate">{u.email}</span>
+                <span className="text-foreground ml-2 truncate">{a.email}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Phone:</span>
-                <span className="text-foreground">{u.phone}</span>
+                <span className="text-foreground">{a.phone}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Joined:</span>
-                <span className="text-foreground">{u.joinedAt}</span>
+                <span className="text-foreground">{a.joinedAt}</span>
               </div>
             </div>
           </div>
@@ -227,52 +268,69 @@ function UsersTable({
   );
 }
 
-type User = (typeof seedUsers)[0];
+type Admin = (typeof seedAdmins)[0];
 
-export default function UsersPage() {
-  const [users, setUsers] = React.useState(seedUsers);
-  const [blockedUsers, setBlockedUsers] = React.useState<User[]>([]);
+export default function AdminsPage() {
+  const [admins, setAdmins] = React.useState(seedAdmins);
+  const [blockedAdmins, setBlockedAdmins] = React.useState<Admin[]>([]);
   const [query, setQuery] = React.useState("");
-  const [activeTab, setActiveTab] = React.useState<"clients" | "providers">("providers");
-  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
-  const [blockUser, setBlockUser] = React.useState<User | null>(null);
-  const [showBlockedUsers, setShowBlockedUsers] = React.useState(false);
+  const [selectedAdmin, setSelectedAdmin] = React.useState<Admin | null>(null);
+  const [blockAdmin, setBlockAdmin] = React.useState<Admin | null>(null);
+  const [showBlockedAdmins, setShowBlockedAdmins] = React.useState(false);
+  const [showCreateAdmin, setShowCreateAdmin] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 5;
 
-  const filtered = users.filter(
-    (u) =>
-      u.name.toLowerCase().includes(query.toLowerCase()) ||
-      u.email.toLowerCase().includes(query.toLowerCase()),
+  const filtered = admins.filter(
+    (a) =>
+      a.name.toLowerCase().includes(query.toLowerCase()) ||
+      a.email.toLowerCase().includes(query.toLowerCase()),
   );
 
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedUsers = filtered.slice(startIndex, endIndex);
+  const paginatedAdmins = filtered.slice(startIndex, endIndex);
 
   React.useEffect(() => {
     setCurrentPage(1);
   }, [query]);
 
   function handleBlockConfirm() {
-    if (blockUser) {
-      setBlockedUsers((prev) => [...prev, blockUser]);
-      setUsers((prev) => prev.filter((u) => u.id !== blockUser.id));
-      setBlockUser(null);
+    if (blockAdmin) {
+      setBlockedAdmins((prev) => [...prev, blockAdmin]);
+      setAdmins((prev) => prev.filter((a) => a.id !== blockAdmin.id));
+      setBlockAdmin(null);
     }
   }
 
   function handleUnblock(id: string) {
-    const user = blockedUsers.find((u) => u.id === id);
-    if (user) {
-      setUsers((prev) => [...prev, user]);
-      setBlockedUsers((prev) => prev.filter((u) => u.id !== id));
+    const admin = blockedAdmins.find((a) => a.id === id);
+    if (admin) {
+      setAdmins((prev) => [...prev, admin]);
+      setBlockedAdmins((prev) => prev.filter((a) => a.id !== id));
     }
   }
 
   function handleDelete(id: string) {
-    setBlockedUsers((prev) => prev.filter((u) => u.id !== id));
+    setBlockedAdmins((prev) => prev.filter((a) => a.id !== id));
+  }
+
+  function handleCreateAdmin(newAdmin: {
+    name: string;
+    email: string;
+    password: string;
+    avatar?: string;
+  }) {
+    const admin: Admin = {
+      id: `${admins.length + blockedAdmins.length + 1}`,
+      name: newAdmin.name,
+      email: newAdmin.email,
+      phone: "000-000-0000",
+      joinedAt: new Date().toISOString().split("T")[0],
+      avatar: newAdmin.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${newAdmin.name}`,
+    };
+    setAdmins((prev) => [admin, ...prev]);
   }
 
   return (
@@ -281,13 +339,13 @@ export default function UsersPage() {
       <div className="bg-primary text-primary-foreground rounded-t-lg p-4">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
-            <h2 className="text-lg font-semibold">User List</h2>
+            <h2 className="text-lg font-semibold">Admin List</h2>
           </div>
           <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
             <div className="relative w-full sm:w-64">
               <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
-                placeholder="Search User"
+                placeholder="Search Admin"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="bg-background text-foreground border-primary-foreground/20 w-full pl-9"
@@ -296,40 +354,27 @@ export default function UsersPage() {
             <Button
               variant="secondary"
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 whitespace-nowrap"
-              onClick={() => setShowBlockedUsers(true)}
+              onClick={() => setShowCreateAdmin(true)}
             >
-              Blocked ({blockedUsers.length})
+              Create Admin
+            </Button>
+            <Button
+              variant="secondary"
+              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 whitespace-nowrap"
+              onClick={() => setShowBlockedAdmins(true)}
+            >
+              Blocked ({blockedAdmins.length})
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Tabs and controls */}
-      <div className="bg-card border-border border-b p-4">
-        <div className="flex items-center gap-2 overflow-x-auto sm:gap-3">
-          <Button
-            variant={activeTab === "clients" ? "default" : "outline"}
-            onClick={() => setActiveTab("clients")}
-            className="px-4 whitespace-nowrap sm:px-6"
-          >
-            Clients
-          </Button>
-          <Button
-            variant={activeTab === "providers" ? "default" : "outline"}
-            onClick={() => setActiveTab("providers")}
-            className="px-4 whitespace-nowrap sm:px-6"
-          >
-            Providers
-          </Button>
-        </div>
-      </div>
-
       {/* Table area */}
       <div>
-        <UsersTable
-          users={paginatedUsers}
-          onViewUser={setSelectedUser}
-          onBlockUser={setBlockUser}
+        <AdminsTable
+          admins={paginatedAdmins}
+          onViewAdmin={setSelectedAdmin}
+          onBlockAdmin={setBlockAdmin}
           startIndex={startIndex}
         />
       </div>
@@ -340,7 +385,7 @@ export default function UsersPage() {
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="text-muted-foreground text-sm">
               Showing {startIndex + 1} to {Math.min(endIndex, filtered.length)} of {filtered.length}{" "}
-              users
+              admins
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -381,34 +426,41 @@ export default function UsersPage() {
         </div>
       )}
 
-      {/* View User Modal */}
+      {/* View Admin Modal */}
       <UserDetailsModal
-        open={!!selectedUser}
-        onClose={() => setSelectedUser(null)}
-        user={selectedUser}
+        open={!!selectedAdmin}
+        onClose={() => setSelectedAdmin(null)}
+        user={selectedAdmin}
         onBlock={() => {
-          if (selectedUser) {
-            setBlockUser(selectedUser);
-            setSelectedUser(null);
+          if (selectedAdmin) {
+            setBlockAdmin(selectedAdmin);
+            setSelectedAdmin(null);
           }
         }}
       />
 
-      {/* Block User Modal */}
+      {/* Block Admin Modal */}
       <BlockUserModal
-        open={!!blockUser}
-        onClose={() => setBlockUser(null)}
-        user={blockUser}
+        open={!!blockAdmin}
+        onClose={() => setBlockAdmin(null)}
+        user={blockAdmin}
         onConfirm={handleBlockConfirm}
       />
 
-      {/* Blocked Users Modal */}
+      {/* Blocked Admins Modal */}
       <BlockedUsersModal
-        open={showBlockedUsers}
-        onClose={() => setShowBlockedUsers(false)}
-        blockedUsers={blockedUsers}
+        open={showBlockedAdmins}
+        onClose={() => setShowBlockedAdmins(false)}
+        blockedUsers={blockedAdmins}
         onUnblock={handleUnblock}
         onDelete={handleDelete}
+      />
+
+      {/* Create Admin Modal */}
+      <CreateAdminModal
+        open={showCreateAdmin}
+        onClose={() => setShowCreateAdmin(false)}
+        onConfirm={handleCreateAdmin}
       />
     </div>
   );

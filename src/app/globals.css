@@ -46,7 +46,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(92.712% 0.06809 97.538);
+  --background: oklch(96.5% 0.012 230);
   --navbarAndSidebar: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -79,7 +79,6 @@
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --custom: oklch(0.65 0.14 250);
-
 }
 
 .dark {
@@ -127,4 +126,3 @@
     @apply bg-background text-foreground m-0 p-0;
   }
 }
-
