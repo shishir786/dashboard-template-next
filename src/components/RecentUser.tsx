@@ -1,44 +1,184 @@
 "use client"
 
-import React from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState } from "react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { formatDistanceToNow } from "date-fns"
+import { Button } from "@/components/ui/button"
+import { Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react"
 
-// Local placeholder data so this component no longer depends on a shared UsersContext.
-// The user will implement their own API integration in this component later.
-const seedUsers = [
-  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
-  { id: '2', name: 'Bob Smith', email: 'bob@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) },
-  { id: '3', name: 'Carol Lee', email: 'carol@example.com', avatar: '', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10) },
+const recentUsers = [
+  {
+    id: 'S001',
+    name: 'DS',
+    email: 'ds@example.com',
+    phone: '123-456-7890',
+    userType: 'Admin',
+    joinedDate: '1/10/2023',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DS'
+  },
+  {
+    id: 'S002',
+    name: 'Jane Doe',
+    email: 'janedoe@example.com',
+    phone: '234-567-8901',
+    userType: 'User',
+    joinedDate: '3/15/2023',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane'
+  },
+  {
+    id: 'S003',
+    name: 'John Smith',
+    email: 'johnsmith@example.com',
+    phone: '345-678-9012',
+    userType: 'User',
+    joinedDate: '5/22/2023',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John'
+  },
+  {
+    id: 'S004',
+    name: 'Alice Johnson',
+    email: 'alicej@example.com',
+    phone: '456-789-0123',
+    userType: 'Moderator',
+    joinedDate: '7/3/2023',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice'
+  },
+  {
+    id: 'S005',
+    name: 'Bob Brown',
+    email: 'bobb@example.com',
+    phone: '567-890-1234',
+    userType: 'User',
+    joinedDate: '9/18/2023',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob'
+  },
 ]
 
-export default function RecentUser({ max = 10 }: { max?: number }) {
-  const items = seedUsers.slice(0, max)
+export default function RecentUser() {
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalPages = 3
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recent users</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-3">
-          {items.map((u) => (
-            <div key={u.id} className="flex items-center gap-3">
-              <Avatar>
-                {u.avatar ? <AvatarImage src={u.avatar} alt={u.name} /> : <AvatarFallback>{u.name.split(" ")[0][0]}</AvatarFallback>}
-              </Avatar>
-              <div className="flex-1">
-                <div className="font-medium">{u.name}</div>
-                {u.email && <div className="text-sm text-muted-foreground">{u.email}</div>}
-              </div>
-              <div className="text-xs text-muted-foreground">
-                {formatDistanceToNow(u.createdAt as Date, { addSuffix: true })}
-              </div>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="bg-card rounded-lg border border-border overflow-hidden dark:border-[#F4B057]">
+      {/* Header */}
+      <div className="p-4 border-b border-border">
+        <h2 className="text-lg font-semibold text-foreground">Recent Users</h2>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full">
+          <thead className="bg-primary">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                S.ID
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                Full Name
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                Phone No
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                User Type
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                Joined Date
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-primary-foreground uppercase tracking-wider">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {recentUsers.map((user) => (
+              <tr key={user.id} className="hover:bg-muted/30 transition-colors">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">
+                  {user.id}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm text-foreground">{user.name}</span>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  {user.email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  {user.phone}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  {user.userType}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  {user.joinedDate}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                      title="Block User"
+                    >
+                      <Ban className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                      title="View Details"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="p-4 border-t border-border flex items-center justify-end gap-2">
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <Button
+            key={page}
+            variant={currentPage === page ? "default" : "outline"}
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(page)}
+          >
+            {page}
+          </Button>
+        ))}
+
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+          disabled={currentPage === totalPages}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
   )
 }

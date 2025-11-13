@@ -53,7 +53,7 @@ const [date, setDate] = React.useState<Date | undefined>(new Date())
         </div>
       </div>
 
-      <div>
+      <div className="pt-5 ">
         <RecentUser />
       </div>
     </>
