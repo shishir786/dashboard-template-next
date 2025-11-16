@@ -238,7 +238,7 @@ export default function UsersPage() {
   const [blockUser, setBlockUser] = React.useState<User | null>(null);
   const [showBlockedUsers, setShowBlockedUsers] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const filtered = users.filter(
     (u) =>

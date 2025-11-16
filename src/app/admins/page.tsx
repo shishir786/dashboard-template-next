@@ -279,7 +279,7 @@ export default function AdminsPage() {
   const [showBlockedAdmins, setShowBlockedAdmins] = React.useState(false);
   const [showCreateAdmin, setShowCreateAdmin] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const filtered = admins.filter(
     (a) =>

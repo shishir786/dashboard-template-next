@@ -1,5 +1,5 @@
 "use client";
-import { LayoutDashboard, LogOut, RssIcon, Settings, User, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, Podcast, RssIcon, Settings, User, Users, Wallet } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,6 +34,16 @@ const items = [
     title: "Admins",
     url: "/admins",
     icon: User,
+  },
+  {
+    title: "Earnings",
+    url: "/earnings",
+    icon: Wallet,
+  },
+  {
+    title: "Subscription",
+    url: "/subscription",
+    icon: Podcast,
   },
   {
     title: "Blog",

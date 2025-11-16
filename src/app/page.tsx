@@ -2,6 +2,7 @@
 import RecentUser from "@/components/RecentUser";
 import { UserRatio } from "@/components/UserRatio";
 import { Calendar } from "@/components/ui/calendar";
+import { CountingNumber } from "@/components/ui/CountingNumber";
 import React from "react";
 
 const Dashbaord = () => {
@@ -15,7 +16,13 @@ const Dashbaord = () => {
       >
         <div className="flex flex-1 flex-col items-center justify-center px-2">
           <p className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white">
-            7.8k
+            <CountingNumber
+              end={7.8}
+              duration={1000}
+              decimals={1}
+              suffix="k"
+              className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white"
+            />
           </p>
           <span className="text-center text-xs font-medium text-[#0D2357] sm:text-sm md:text-base lg:text-lg dark:text-white">
             Total Distributor
@@ -24,7 +31,12 @@ const Dashbaord = () => {
         <div className="mx-3 h-12 w-px bg-[#F4B057] sm:mx-4 sm:h-14 md:mx-6 md:h-16 lg:mx-8" />
         <div className="flex flex-1 flex-col items-center justify-center px-2">
           <p className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white">
-            249
+            <CountingNumber
+              end={249}
+              duration={1000}
+              decimals={0}
+              className="mb-1 text-xl font-bold text-[#0D2357] sm:mb-2 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white"
+            />
           </p>
           <span className="text-center text-xs font-medium text-[#0D2357] sm:text-sm md:text-base lg:text-lg dark:text-white">
             Total Employer
