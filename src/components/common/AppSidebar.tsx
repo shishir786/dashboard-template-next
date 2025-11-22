@@ -1,5 +1,5 @@
 "use client";
-import { LayoutDashboard, LogOut, Podcast, RssIcon, Settings, User, Users, Wallet } from "lucide-react";
+import { ChartBarStacked, LayoutDashboard, LogOut, PackageSearch, Podcast, RssIcon, Settings, User, Users, Wallet } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -39,6 +39,16 @@ const items = [
     title: "Earnings",
     url: "/earnings",
     icon: Wallet,
+  },
+  {
+    title: "Category",
+    url: "/category",
+    icon: ChartBarStacked,
+  },
+  {
+    title: "Products",
+    url: "/products",
+    icon: PackageSearch,
   },
   {
     title: "Subscription",
@@ -88,7 +98,7 @@ const AppSidebar = () => {
         </div>
       </SidebarHeader>
 
-      <SidebarSeparator />
+      <SidebarSeparator className="mx-auto w-3/4 max-w-xs" />
 
       <SidebarContent>
         <SidebarGroup>
