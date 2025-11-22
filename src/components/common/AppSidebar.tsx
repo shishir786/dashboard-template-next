@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import {
   ChartBarStacked,
   LayoutDashboard,
@@ -14,6 +15,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -81,6 +84,7 @@ const items = [
 const AppSidebar = () => {
   const { state } = useSidebar();
   const pathname = usePathname();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const isActive = (url: string) => {
     if (url === "/") {
@@ -146,18 +150,57 @@ const AppSidebar = () => {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="h-12 text-base font-medium md:h-16 md:text-lg">
-              <Link
-                href="#"
-                className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0 md:gap-4"
-              >
+            <SidebarMenuButton
+              className="h-12 text-base font-medium md:h-16 md:text-lg"
+              onClick={() => setLogoutModalOpen(true)}
+            >
+              <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0 md:gap-4">
                 <LogOut className="h-6 w-6 text-red-600 group-data-[collapsible=icon]:h-9 group-data-[collapsible=icon]:w-9 md:h-7 md:w-7" />
                 <span className="text-base font-medium text-red-500 md:text-lg">Log Out</span>
-              </Link>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+
+      {/* Logout Confirmation Modal */}
+      <Dialog open={logoutModalOpen} onOpenChange={setLogoutModalOpen} modal={false}>
+        <DialogContent className="bg-background sm:max-w-[425px]">
+          <DialogHeader className="space-y-3">
+            <div className="bg-destructive/10 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
+              <LogOut className="text-destructive h-6 w-6" />
+            </div>
+            <DialogTitle className="text-center text-xl font-semibold">Confirm Logout</DialogTitle>
+          </DialogHeader>
+
+          <div className="py-4">
+            <p className="text-muted-foreground text-center text-sm">
+              Are you sure you want to log out of your account?
+            </p>
+            <p className="text-muted-foreground mt-3 text-center text-xs">
+              You will need to log in again to access the dashboard.
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                // Add your logout logic here
+                console.log("User logged out");
+                // Example: router.push('/login');
+                setLogoutModalOpen(false);
+              }}
+              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground flex-1"
+            >
+              Log Out
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Sidebar>
   );
 };
