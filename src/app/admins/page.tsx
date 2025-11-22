@@ -2,13 +2,14 @@
 
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Search, Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Eye, Ban, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import BlockedUsersModal from "@/components/modals/BlockedUsersModal";
 import UserDetailsModal from "@/components/modals/UserDetailsModal";
 import BlockUserModal from "@/components/modals/BlockUserModal";
 import CreateAdminModal from "@/components/modals/CreateAdminModal";
+import EditAdminModal from "@/components/modals/EditAdminModal";
 
 const seedAdmins = [
   {
@@ -17,6 +18,7 @@ const seedAdmins = [
     phone: "123-456-7890",
     joinedAt: "2023-01-01",
     email: "admin.john@gmail.com",
+    role: "Super Admin",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminJohn",
   },
   {
@@ -25,6 +27,7 @@ const seedAdmins = [
     phone: "987-654-3210",
     joinedAt: "2023-02-15",
     email: "admin.jane@email.com",
+    role: "Admin",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminJane",
   },
   {
@@ -33,6 +36,7 @@ const seedAdmins = [
     phone: "555-123-4567",
     joinedAt: "2023-03-10",
     email: "admin.robert@email.com",
+    role: "Editor",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminRobert",
   },
   {
@@ -41,6 +45,7 @@ const seedAdmins = [
     phone: "444-555-6666",
     joinedAt: "2023-04-20",
     email: "admin.emily@email.com",
+    role: "Moderator",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminEmily",
   },
   {
@@ -49,6 +54,7 @@ const seedAdmins = [
     phone: "222-333-4444",
     joinedAt: "2023-05-30",
     email: "admin.michael@email.com",
+    role: "Admin",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminMichael",
   },
   {
@@ -57,6 +63,7 @@ const seedAdmins = [
     phone: "333-444-5555",
     joinedAt: "2023-06-15",
     email: "admin.sarah@email.com",
+    role: "Editor",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminSarah",
   },
   {
@@ -65,6 +72,7 @@ const seedAdmins = [
     phone: "666-777-8888",
     joinedAt: "2023-07-25",
     email: "admin.david@email.com",
+    role: "Moderator",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminDavid",
   },
   {
@@ -73,6 +81,7 @@ const seedAdmins = [
     phone: "777-888-9999",
     joinedAt: "2023-08-10",
     email: "admin.lisa@email.com",
+    role: "Admin",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminLisa",
   },
   {
@@ -81,6 +90,7 @@ const seedAdmins = [
     phone: "888-999-0000",
     joinedAt: "2023-09-05",
     email: "admin.tom@email.com",
+    role: "Editor",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminTom",
   },
   {
@@ -89,6 +99,7 @@ const seedAdmins = [
     phone: "999-000-1111",
     joinedAt: "2023-10-20",
     email: "admin.anna@email.com",
+    role: "Moderator",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminAnna",
   },
   {
@@ -97,6 +108,7 @@ const seedAdmins = [
     phone: "111-222-3333",
     joinedAt: "2023-11-12",
     email: "admin.chris@email.com",
+    role: "Admin",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminChris",
   },
   {
@@ -105,6 +117,7 @@ const seedAdmins = [
     phone: "222-333-4444",
     joinedAt: "2023-12-01",
     email: "admin.maria@email.com",
+    role: "Editor",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AdminMaria",
   },
 ];
@@ -113,11 +126,13 @@ function AdminsTable({
   admins,
   onViewAdmin,
   onBlockAdmin,
+  onEditAdmin,
   startIndex,
 }: {
   admins: typeof seedAdmins;
   onViewAdmin: (admin: Admin) => void;
   onBlockAdmin: (admin: Admin) => void;
+  onEditAdmin: (admin: Admin) => void;
   startIndex: number;
 }) {
   return (
@@ -133,6 +148,9 @@ function AdminsTable({
                 </th>
                 <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Admin Name
+                </th>
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
+                  Role
                 </th>
                 <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Phone Number
@@ -168,6 +186,11 @@ function AdminsTable({
                       <span className="text-foreground text-sm font-medium">{a.name}</span>
                     </div>
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="bg-secondary text-secondary-foreground rounded px-2 py-1 text-xs font-medium">
+                      {a.role}
+                    </span>
+                  </td>
                   <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                     {a.phone}
                   </td>
@@ -178,7 +201,16 @@ function AdminsTable({
                     {a.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
+                        onClick={() => onEditAdmin(a)}
+                        title="Edit Admin"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -230,6 +262,15 @@ function AdminsTable({
                 <Button
                   variant="ghost"
                   size="icon"
+                  className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
+                  onClick={() => onEditAdmin(a)}
+                  title="Edit Admin"
+                >
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
                   onClick={() => onBlockAdmin(a)}
                   title="Block Admin"
@@ -248,6 +289,12 @@ function AdminsTable({
               </div>
             </div>
             <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Role:</span>
+                <span className="bg-secondary text-secondary-foreground rounded px-2 py-0.5 text-xs font-medium">
+                  {a.role}
+                </span>
+              </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Email:</span>
                 <span className="text-foreground ml-2 truncate">{a.email}</span>
@@ -276,6 +323,7 @@ export default function AdminsPage() {
   const [query, setQuery] = React.useState("");
   const [selectedAdmin, setSelectedAdmin] = React.useState<Admin | null>(null);
   const [blockAdmin, setBlockAdmin] = React.useState<Admin | null>(null);
+  const [editingAdmin, setEditingAdmin] = React.useState<Admin | null>(null);
   const [showBlockedAdmins, setShowBlockedAdmins] = React.useState(false);
   const [showCreateAdmin, setShowCreateAdmin] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -326,11 +374,28 @@ export default function AdminsPage() {
       id: `${admins.length + blockedAdmins.length + 1}`,
       name: newAdmin.name,
       email: newAdmin.email,
+      role: "Admin", // Default role for new admins
       phone: "000-000-0000",
       joinedAt: new Date().toISOString().split("T")[0],
       avatar: newAdmin.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${newAdmin.name}`,
     };
     setAdmins((prev) => [admin, ...prev]);
+  }
+
+  function handleUpdateAdmin(updatedAdmin: {
+    name: string;
+    email: string;
+    role: string;
+    avatar?: string;
+  }) {
+    if (editingAdmin) {
+      setAdmins((prev) =>
+        prev.map((a) =>
+          a.id === editingAdmin.id ? { ...a, ...updatedAdmin } : a
+        )
+      );
+      setEditingAdmin(null);
+    }
   }
 
   return (
@@ -375,6 +440,7 @@ export default function AdminsPage() {
           admins={paginatedAdmins}
           onViewAdmin={setSelectedAdmin}
           onBlockAdmin={setBlockAdmin}
+          onEditAdmin={setEditingAdmin}
           startIndex={startIndex}
         />
       </div>
@@ -461,6 +527,14 @@ export default function AdminsPage() {
         open={showCreateAdmin}
         onClose={() => setShowCreateAdmin(false)}
         onConfirm={handleCreateAdmin}
+      />
+
+      {/* Edit Admin Modal */}
+      <EditAdminModal
+        open={!!editingAdmin}
+        onClose={() => setEditingAdmin(null)}
+        onConfirm={handleUpdateAdmin}
+        admin={editingAdmin}
       />
     </div>
   );

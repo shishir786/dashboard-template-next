@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,24 +11,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, X } from "lucide-react";
 
-type CreateCategoryModalProps = {
+type EditCategoryModalProps = {
   open: boolean;
   onClose: () => void;
   onConfirm: (category: { name: string; subCategories: string[] }) => void;
+  category: { name: string; subCategories: string[] } | null;
 };
 
-export default function CreateCategoryModal({
+export default function EditCategoryModal({
   open,
   onClose,
   onConfirm,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: (category: { name: string; subCategories: string[] }) => void;
-}) {
+  category,
+}: EditCategoryModalProps) {
   const [name, setName] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([""]);
   const [errors, setErrors] = useState<{ name?: string }>({});
+
+  useEffect(() => {
+    if (open && category) {
+      setName(category.name);
+      setSubCategories(
+        category.subCategories.length > 0 ? category.subCategories : [""]
+      );
+      setErrors({});
+    }
+  }, [open, category]);
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -52,15 +60,8 @@ export default function CreateCategoryModal({
         name,
         subCategories: filteredSubCategories,
       });
-      handleClose();
+      onClose();
     }
-  };
-
-  const handleClose = () => {
-    setName("");
-    setSubCategories([""]);
-    setErrors({});
-    onClose();
   };
 
   const addSubCategory = () => {
@@ -79,11 +80,11 @@ export default function CreateCategoryModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose} modal={false}>
+    <Dialog open={open} onOpenChange={onClose} modal={false}>
       <DialogContent className="sm:max-w-[500px] bg-background p-0 gap-0">
         <DialogHeader className="bg-primary text-primary-foreground p-6 rounded-t-lg">
           <DialogTitle className="text-xl font-semibold">
-            Create Category
+            Edit Category
           </DialogTitle>
         </DialogHeader>
 
@@ -157,7 +158,7 @@ export default function CreateCategoryModal({
             <Button
               type="button"
               variant="outline"
-              onClick={handleClose}
+              onClick={onClose}
               className="flex-1"
             >
               Cancel
@@ -166,7 +167,7 @@ export default function CreateCategoryModal({
               type="submit"
               className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
             >
-              Create Category
+              Save Changes
             </Button>
           </div>
         </form>

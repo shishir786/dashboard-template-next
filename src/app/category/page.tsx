@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Plus, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Plus, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CreateCategoryModal from "@/components/modals/CreateCategoryModal";
+import EditCategoryModal from "@/components/modals/EditCategoryModal";
 import {
   Dialog,
   DialogContent,
@@ -91,10 +92,12 @@ type Category = (typeof seedCategories)[0];
 function CategoryTable({
   categories,
   onDelete,
+  onEdit,
   startIndex,
 }: {
   categories: Category[];
   onDelete: (category: Category) => void;
+  onEdit: (category: Category) => void;
   startIndex: number;
 }) {
   return (
@@ -154,15 +157,26 @@ function CategoryTable({
                     {cat.createdAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
-                      onClick={() => onDelete(cat)}
-                      title="Delete Category"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
+                        onClick={() => onEdit(cat)}
+                        title="Edit Category"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
+                        onClick={() => onDelete(cat)}
+                        title="Delete Category"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -187,15 +201,26 @@ function CategoryTable({
                   #{startIndex + idx + 1}
                 </p>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
-                onClick={() => onDelete(cat)}
-                title="Delete Category"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
+                  onClick={() => onEdit(cat)}
+                  title="Edit Category"
+                >
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
+                  onClick={() => onDelete(cat)}
+                  title="Delete Category"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex flex-col gap-1">
@@ -228,6 +253,7 @@ export default function CategoryPage() {
   const [query, setQuery] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [deleteCategory, setDeleteCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -251,6 +277,25 @@ export default function CategoryPage() {
       createdAt: new Date().toISOString().split("T")[0],
     };
     setCategories([category, ...categories]);
+    setIsCreateModalOpen(false);
+  };
+
+  const handleUpdateCategory = (updatedData: {
+    name: string;
+    subCategories: string[];
+  }) => {
+    if (editingCategory) {
+      setCategories(
+        categories.map((c) =>
+          c.id === editingCategory.id ? { ...c, ...updatedData } : c
+        )
+      );
+      setEditingCategory(null);
+    }
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setEditingCategory(category);
   };
 
   const handleDeleteConfirm = () => {
@@ -294,6 +339,7 @@ export default function CategoryPage() {
         <CategoryTable
           categories={paginatedCategories}
           onDelete={setDeleteCategory}
+          onEdit={handleEditCategory}
           startIndex={startIndex}
         />
       </div>
@@ -353,6 +399,14 @@ export default function CategoryPage() {
         open={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onConfirm={handleCreateCategory}
+      />
+
+      {/* Edit Category Modal */}
+      <EditCategoryModal
+        open={!!editingCategory}
+        onClose={() => setEditingCategory(null)}
+        onConfirm={handleUpdateCategory}
+        category={editingCategory}
       />
 
       {/* Delete Category Modal */}
