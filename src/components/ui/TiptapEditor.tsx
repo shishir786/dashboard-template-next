@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useEditor, EditorContent } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
-import Placeholder from "@tiptap/extension-placeholder"
-import Link from "@tiptap/extension-link"
-import Image from "@tiptap/extension-image"
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Placeholder from "@tiptap/extension-placeholder";
+import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
 import {
   Bold,
   Italic,
@@ -16,14 +16,14 @@ import {
   Code,
   Heading2,
   ImageIcon,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type TiptapEditorProps = {
-  content: string
-  onChange: (content: string) => void
-  placeholder?: string
-}
+  content: string;
+  onChange: (content: string) => void;
+  placeholder?: string;
+};
 
 export default function TiptapEditor({
   content,
@@ -47,7 +47,7 @@ export default function TiptapEditor({
     content,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
+      onChange(editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -55,36 +55,36 @@ export default function TiptapEditor({
           "prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none min-h-[300px] max-w-none p-4",
       },
     },
-  })
+  });
 
   const handleImageUpload = () => {
-    const input = document.createElement("input")
-    input.type = "file"
-    input.accept = "image/*"
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
 
     input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (!file || !editor) return
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file || !editor) return;
 
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string
-        editor.chain().focus().setImage({ src: base64String }).run()
-      }
-      reader.readAsDataURL(file)
-    }
+        const base64String = reader.result as string;
+        editor.chain().focus().setImage({ src: base64String }).run();
+      };
+      reader.readAsDataURL(file);
+    };
 
-    input.click()
-  }
+    input.click();
+  };
 
   if (!editor) {
-    return null
+    return null;
   }
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-background">
+    <div className="border-border bg-background overflow-hidden rounded-lg border">
       {/* Toolbar */}
-      <div className="border-b border-border p-2 flex flex-wrap gap-1 bg-muted/30">
+      <div className="border-border bg-muted/30 flex flex-wrap gap-1 border-b p-2">
         <Button
           type="button"
           variant="ghost"
@@ -155,7 +155,7 @@ export default function TiptapEditor({
         >
           <Code className="h-4 w-4" />
         </Button>
-        <div className="w-px h-6 bg-border mx-1" />
+        <div className="bg-border mx-1 h-6 w-px" />
         <Button
           type="button"
           variant="ghost"
@@ -165,7 +165,7 @@ export default function TiptapEditor({
         >
           <ImageIcon className="h-4 w-4" />
         </Button>
-        <div className="w-px h-6 bg-border mx-1" />
+        <div className="bg-border mx-1 h-6 w-px" />
         <Button
           type="button"
           variant="ghost"
@@ -191,5 +191,5 @@ export default function TiptapEditor({
       {/* Editor */}
       <EditorContent editor={editor} className="bg-background" />
     </div>
-  )
+  );
 }

@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex shrink-0 items-center gap-1.5 mr-2 pr-0 md:gap-3 md:pr-2 ">
+          <div className="mr-2 flex shrink-0 items-center gap-1.5 pr-0 md:gap-3 md:pr-2">
             {/* Theme Toggle */}
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
@@ -108,10 +108,10 @@ const Navbar = () => {
 
             <div className="flex h-[40px] w-[40px] flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-gray-900 bg-transparent md:h-[52px] md:w-[52px] dark:border-white">
               <Link href="/profile">
-              <User
-                className="h-5 w-5 text-gray-900 md:h-6 md:w-6 dark:text-white"
-                strokeWidth={2}
-              />
+                <User
+                  className="h-5 w-5 text-gray-900 md:h-6 md:w-6 dark:text-white"
+                  strokeWidth={2}
+                />
               </Link>
             </div>
           </div>

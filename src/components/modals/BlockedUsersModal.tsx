@@ -118,7 +118,11 @@ export default function BlockedUsersModal({
         </DialogContent>
       </Dialog>
 
-      <Dialog open={!!userToDelete} onOpenChange={(isOpen) => !isOpen && setUserToDelete(null)} modal={false}>
+      <Dialog
+        open={!!userToDelete}
+        onOpenChange={(isOpen) => !isOpen && setUserToDelete(null)}
+        modal={false}
+      >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <div className="flex items-center gap-4">
@@ -128,7 +132,8 @@ export default function BlockedUsersModal({
               <div className="space-y-1">
                 <DialogTitle>Delete User</DialogTitle>
                 <DialogDescription>
-                  Are you sure you want to permanently delete this user? This action cannot be undone.
+                  Are you sure you want to permanently delete this user? This action cannot be
+                  undone.
                 </DialogDescription>
               </div>
             </div>

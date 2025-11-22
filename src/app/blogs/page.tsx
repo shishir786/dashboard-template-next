@@ -1,25 +1,20 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { Search, Eye, Trash2, ChevronLeft, ChevronRight, Plus } from "lucide-react"
-import CreateBlogModal from "@/components/modals/CreateBlogModal"
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Search, Eye, Trash2, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import CreateBlogModal from "@/components/modals/CreateBlogModal";
 
 type Blog = {
-  id: string
-  title: string
-  author: string
-  category: string
-  content: string
-  createdAt: string
-}
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  content: string;
+  createdAt: string;
+};
 
 const seedBlogs: Blog[] = [
   {
@@ -118,7 +113,7 @@ const seedBlogs: Blog[] = [
     content: "<p>Transform your living space...</p>",
     createdAt: "2024-03-25",
   },
-]
+];
 
 function BlogsTable({
   blogs,
@@ -126,59 +121,59 @@ function BlogsTable({
   onDelete,
   startIndex,
 }: {
-  blogs: Blog[]
-  onView: (blog: Blog) => void
-  onDelete: (id: string) => void
-  startIndex: number
+  blogs: Blog[];
+  onView: (blog: Blog) => void;
+  onDelete: (id: string) => void;
+  startIndex: number;
 }) {
   return (
     <>
       {/* Desktop Table View */}
-      <div className="hidden md:block bg-card rounded-b-lg shadow-sm border border-border overflow-hidden">
+      <div className="bg-card border-border hidden overflow-hidden rounded-b-lg border shadow-sm md:block">
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead className="bg-muted/50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   No
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Title
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Author
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Category
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Created Date
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="text-muted-foreground px-6 py-4 text-left text-xs font-medium tracking-wider uppercase">
                   Action
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-border divide-y">
               {blogs.map((blog, idx) => (
                 <tr key={blog.id} className="hover:bg-muted/30 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                     {startIndex + idx + 1}
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-foreground line-clamp-1">
+                    <span className="text-foreground line-clamp-1 text-sm font-medium">
                       {blog.title}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                     {blog.author}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    <span className="bg-primary/10 text-primary inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium">
                       {blog.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
                     {blog.createdAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -186,7 +181,7 @@ function BlogsTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                        className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
                         onClick={() => onView(blog)}
                         title="View Blog"
                       >
@@ -195,7 +190,7 @@ function BlogsTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
                         onClick={() => onDelete(blog.id)}
                         title="Delete Blog"
                       >
@@ -211,19 +206,19 @@ function BlogsTable({
       </div>
 
       {/* Mobile/Tablet Card View */}
-      <div className="md:hidden space-y-3 p-4">
+      <div className="space-y-3 p-4 md:hidden">
         {blogs.map((blog, idx) => (
-          <div key={blog.id} className="bg-card rounded-lg border border-border p-4 space-y-3">
+          <div key={blog.id} className="bg-card border-border space-y-3 rounded-lg border p-4">
             <div className="flex items-start justify-between">
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground line-clamp-2">{blog.title}</h3>
-                <p className="text-xs text-muted-foreground mt-1">#{startIndex + idx + 1}</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-foreground line-clamp-2 font-semibold">{blog.title}</h3>
+                <p className="text-muted-foreground mt-1 text-xs">#{startIndex + idx + 1}</p>
               </div>
-              <div className="flex gap-2 flex-shrink-0 ml-2">
+              <div className="ml-2 flex flex-shrink-0 gap-2">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                  className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8"
                   onClick={() => onView(blog)}
                   title="View Blog"
                 >
@@ -232,7 +227,7 @@ function BlogsTable({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8"
                   onClick={() => onDelete(blog.id)}
                   title="Delete Blog"
                 >
@@ -247,7 +242,7 @@ function BlogsTable({
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Category:</span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                <span className="bg-primary/10 text-primary inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium">
                   {blog.category}
                 </span>
               </div>
@@ -260,69 +255,69 @@ function BlogsTable({
         ))}
       </div>
     </>
-  )
+  );
 }
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<Blog[]>(seedBlogs)
-  const [query, setQuery] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null)
-  const itemsPerPage = 5
+  const [blogs, setBlogs] = useState<Blog[]>(seedBlogs);
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+  const itemsPerPage = 5;
 
   const filtered = blogs.filter(
     (blog) =>
       blog.title.toLowerCase().includes(query.toLowerCase()) ||
       blog.author.toLowerCase().includes(query.toLowerCase()) ||
-      blog.category.toLowerCase().includes(query.toLowerCase())
-  )
+      blog.category.toLowerCase().includes(query.toLowerCase()),
+  );
 
-  const totalPages = Math.ceil(filtered.length / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const paginatedBlogs = filtered.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedBlogs = filtered.slice(startIndex, endIndex);
 
   React.useEffect(() => {
-    setCurrentPage(1)
-  }, [query])
+    setCurrentPage(1);
+  }, [query]);
 
   const handleCreateBlog = (newBlog: {
-    title: string
-    author: string
-    category: string
-    content: string
+    title: string;
+    author: string;
+    category: string;
+    content: string;
   }) => {
     const blog: Blog = {
       id: `${blogs.length + 1}`,
       ...newBlog,
       createdAt: new Date().toISOString().split("T")[0],
-    }
-    setBlogs([blog, ...blogs])
-  }
+    };
+    setBlogs([blog, ...blogs]);
+  };
 
   const handleDeleteBlog = (id: string) => {
     if (confirm("Are you sure you want to delete this blog?")) {
-      setBlogs(blogs.filter((b) => b.id !== id))
+      setBlogs(blogs.filter((b) => b.id !== id));
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       {/* Top header */}
-      <div className="bg-primary text-primary-foreground p-4 rounded-t-lg">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-primary text-primary-foreground rounded-t-lg p-4">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
             <h2 className="text-lg font-semibold">Blog List</h2>
           </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
             <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search blogs..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="pl-9 bg-background text-foreground w-full border-primary-foreground/20"
+                className="bg-background text-foreground border-primary-foreground/20 w-full pl-9"
               />
             </div>
             <Button
@@ -330,7 +325,7 @@ export default function BlogsPage() {
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 whitespace-nowrap"
               onClick={() => setShowCreateModal(true)}
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Create Blog
             </Button>
           </div>
@@ -349,11 +344,11 @@ export default function BlogsPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="bg-card border-t border-border p-4 rounded-b-lg">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-muted-foreground">
-              Showing {startIndex + 1} to {Math.min(endIndex, filtered.length)} of{" "}
-              {filtered.length} blogs
+        <div className="bg-card border-border rounded-b-lg border-t p-4">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div className="text-muted-foreground text-sm">
+              Showing {startIndex + 1} to {Math.min(endIndex, filtered.length)} of {filtered.length}{" "}
+              blogs
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -364,7 +359,7 @@ export default function BlogsPage() {
                 className="h-8"
               >
                 <ChevronLeft className="h-4 w-4" />
-                <span className="hidden sm:inline ml-1">Previous</span>
+                <span className="ml-1 hidden sm:inline">Previous</span>
               </Button>
               <div className="flex items-center gap-1">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -386,7 +381,7 @@ export default function BlogsPage() {
                 disabled={currentPage === totalPages}
                 className="h-8"
               >
-                <span className="hidden sm:inline mr-1">Next</span>
+                <span className="mr-1 hidden sm:inline">Next</span>
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -404,15 +399,15 @@ export default function BlogsPage() {
       {/* View Blog Modal (Simple preview) */}
       {selectedBlog && (
         <Dialog open={!!selectedBlog} onOpenChange={() => setSelectedBlog(null)} modal={false}>
-          <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
             <DialogHeader>
               <DialogTitle>{selectedBlog.title}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-4 text-sm">
                 <span>By {selectedBlog.author}</span>
                 <span>•</span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                <span className="bg-primary/10 text-primary inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium">
                   {selectedBlog.category}
                 </span>
                 <span>•</span>
@@ -427,5 +422,5 @@ export default function BlogsPage() {
         </Dialog>
       )}
     </div>
-  )
+  );
 }

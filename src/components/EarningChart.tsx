@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -9,15 +9,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "A linear area chart"
+export const description = "A linear area chart";
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -32,14 +32,14 @@ const chartData = [
   { month: "October", desktop: 349 },
   { month: "November", desktop: 295 },
   { month: "December", desktop: 412 },
-]
+];
 
 const chartConfig = {
   desktop: {
     label: "Earnings",
     color: "var(--chart-1)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function EarningChart() {
   return (
@@ -52,11 +52,12 @@ export function EarningChart() {
               Showing total earning for the last 12 months
             </CardDescription>
           </div>
-          <div className="flex w-full items-start pr-5 gap-2 text-sm sm:w-auto">
+          <div className="flex w-full items-start gap-2 pr-5 text-sm sm:w-auto">
             <div className="grid gap-2">
-              <div className="flex items-center gap-2 font-medium leading-none"><TrendingUp className="h-4 w-4" />Trending up by 5.2% this month
+              <div className="flex items-center gap-2 leading-none font-medium">
+                <TrendingUp className="h-4 w-4" />
+                Trending up by 5.2% this month
               </div>
-
             </div>
           </div>
         </div>
@@ -94,5 +95,5 @@ export function EarningChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -29,15 +29,13 @@ function DeleteCategoryModal({
 }) {
   return (
     <Dialog open={open} onOpenChange={onClose} modal={false}>
-      <DialogContent className="sm:max-w-[425px] bg-background">
+      <DialogContent className="bg-background sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Delete Category</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete the category{" "}
-            <span className="font-medium text-foreground">
-              "{categoryName}"
-            </span>
-            ? This action cannot be undone.
+            <span className="text-foreground font-medium">"{categoryName}"</span>? This action
+            cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -132,9 +130,7 @@ function CategoryTable({
                     {startIndex + idx + 1}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-foreground text-sm font-medium">
-                      {cat.name}
-                    </span>
+                    <span className="text-foreground text-sm font-medium">{cat.name}</span>
                   </td>
                   <td className="text-muted-foreground px-6 py-4 text-sm">
                     <div className="flex flex-wrap gap-1">
@@ -147,7 +143,7 @@ function CategoryTable({
                         </span>
                       ))}
                       {cat.subCategories.length > 3 && (
-                        <span className="text-muted-foreground text-xs py-0.5">
+                        <span className="text-muted-foreground py-0.5 text-xs">
                           +{cat.subCategories.length - 3} more
                         </span>
                       )}
@@ -188,18 +184,11 @@ function CategoryTable({
       {/* Mobile/Tablet Card View */}
       <div className="space-y-3 p-4 md:hidden">
         {categories.map((cat, idx) => (
-          <div
-            key={cat.id}
-            className="bg-card border-border space-y-3 rounded-lg border p-4"
-          >
+          <div key={cat.id} className="bg-card border-border space-y-3 rounded-lg border p-4">
             <div className="flex items-start justify-between">
               <div className="min-w-0 flex-1">
-                <h3 className="text-foreground truncate font-semibold">
-                  {cat.name}
-                </h3>
-                <p className="text-muted-foreground text-xs">
-                  #{startIndex + idx + 1}
-                </p>
+                <h3 className="text-foreground truncate font-semibold">{cat.name}</h3>
+                <p className="text-muted-foreground text-xs">#{startIndex + idx + 1}</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -257,19 +246,14 @@ export default function CategoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const filtered = categories.filter((c) =>
-    c.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const filtered = categories.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()));
 
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedCategories = filtered.slice(startIndex, endIndex);
 
-  const handleCreateCategory = (newCategory: {
-    name: string;
-    subCategories: string[];
-  }) => {
+  const handleCreateCategory = (newCategory: { name: string; subCategories: string[] }) => {
     const category: Category = {
       id: Math.random().toString(36).substr(2, 9),
       name: newCategory.name,
@@ -280,15 +264,10 @@ export default function CategoryPage() {
     setIsCreateModalOpen(false);
   };
 
-  const handleUpdateCategory = (updatedData: {
-    name: string;
-    subCategories: string[];
-  }) => {
+  const handleUpdateCategory = (updatedData: { name: string; subCategories: string[] }) => {
     if (editingCategory) {
       setCategories(
-        categories.map((c) =>
-          c.id === editingCategory.id ? { ...c, ...updatedData } : c
-        )
+        categories.map((c) => (c.id === editingCategory.id ? { ...c, ...updatedData } : c)),
       );
       setEditingCategory(null);
     }
@@ -349,8 +328,7 @@ export default function CategoryPage() {
         <div className="bg-card border-border rounded-b-lg border-t p-4">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="text-muted-foreground text-sm">
-              Showing {startIndex + 1} to{" "}
-              {Math.min(endIndex, filtered.length)} of {filtered.length}{" "}
+              Showing {startIndex + 1} to {Math.min(endIndex, filtered.length)} of {filtered.length}{" "}
               categories
             </div>
             <div className="flex items-center gap-2">
@@ -365,19 +343,17 @@ export default function CategoryPage() {
                 <span className="ml-1 hidden sm:inline">Previous</span>
               </Button>
               <div className="flex items-center gap-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
-                    <Button
-                      key={page}
-                      variant={currentPage === page ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setCurrentPage(page)}
-                      className="h-8 w-8 p-0"
-                    >
-                      {page}
-                    </Button>
-                  )
-                )}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(page)}
+                    className="h-8 w-8 p-0"
+                  >
+                    {page}
+                  </Button>
+                ))}
               </div>
               <Button
                 variant="outline"

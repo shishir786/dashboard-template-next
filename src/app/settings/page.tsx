@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { ChevronRight } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const settingsOptions = [
   {
@@ -24,15 +24,15 @@ const settingsOptions = [
     title: "About Us",
     path: "/settings/about-us",
   },
-]
+];
 
 export default function SettingsPage() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground p-6 rounded-t-lg">
+      <div className="bg-primary text-primary-foreground rounded-t-lg p-6">
         <h2 className="text-2xl font-semibold">Settings</h2>
       </div>
 
@@ -42,17 +42,15 @@ export default function SettingsPage() {
           <div key={option.id}>
             <button
               onClick={() => router.push(option.path)}
-              className="w-full flex items-center justify-between p-6 hover:bg-muted/50 transition-colors text-left"
+              className="hover:bg-muted/50 flex w-full items-center justify-between p-6 text-left transition-colors"
             >
-              <span className="text-foreground font-medium text-lg">{option.title}</span>
-              <ChevronRight className="h-7 w-7 text-muted-foreground" />
+              <span className="text-foreground text-lg font-medium">{option.title}</span>
+              <ChevronRight className="text-muted-foreground h-7 w-7" />
             </button>
-            {index < settingsOptions.length - 1 && (
-              <div className="border-b border-border mx-6" />
-            )}
+            {index < settingsOptions.length - 1 && <div className="border-border mx-6 border-b" />}
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }

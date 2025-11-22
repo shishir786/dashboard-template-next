@@ -390,9 +390,7 @@ export default function AdminsPage() {
   }) {
     if (editingAdmin) {
       setAdmins((prev) =>
-        prev.map((a) =>
-          a.id === editingAdmin.id ? { ...a, ...updatedAdmin } : a
-        )
+        prev.map((a) => (a.id === editingAdmin.id ? { ...a, ...updatedAdmin } : a)),
       );
       setEditingAdmin(null);
     }

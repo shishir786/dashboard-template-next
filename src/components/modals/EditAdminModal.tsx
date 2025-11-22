@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -15,12 +10,7 @@ import { Eye, EyeOff, Upload } from "lucide-react";
 type EditAdminModalProps = {
   open: boolean;
   onClose: () => void;
-  onConfirm: (admin: {
-    name: string;
-    email: string;
-    role: string;
-    avatar?: string;
-  }) => void;
+  onConfirm: (admin: { name: string; email: string; role: string; avatar?: string }) => void;
   admin: {
     name: string;
     email: string;
@@ -29,12 +19,7 @@ type EditAdminModalProps = {
   } | null;
 };
 
-export default function EditAdminModal({
-  open,
-  onClose,
-  onConfirm,
-  admin,
-}: EditAdminModalProps) {
+export default function EditAdminModal({ open, onClose, onConfirm, admin }: EditAdminModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -88,9 +73,7 @@ export default function EditAdminModal({
         name,
         email,
         role,
-        avatar:
-          avatar ||
-          `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`,
+        avatar: avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`,
       });
       onClose();
     }
@@ -100,18 +83,13 @@ export default function EditAdminModal({
     <Dialog open={open} onOpenChange={onClose} modal={false}>
       <DialogContent className="bg-background gap-0 p-0 sm:max-w-[600px]">
         <DialogHeader className="bg-primary text-primary-foreground rounded-t-lg p-6">
-          <DialogTitle className="text-xl font-semibold">
-            Edit Admin
-          </DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Edit Admin</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5 p-6">
           {/* Name */}
           <div className="space-y-2">
-            <label
-              htmlFor="name"
-              className="text-foreground text-sm font-medium"
-            >
+            <label htmlFor="name" className="text-foreground text-sm font-medium">
               Name
             </label>
             <Input
@@ -125,17 +103,12 @@ export default function EditAdminModal({
               }}
               className={errors.name ? "border-destructive" : ""}
             />
-            {errors.name && (
-              <p className="text-destructive text-xs">{errors.name}</p>
-            )}
+            {errors.name && <p className="text-destructive text-xs">{errors.name}</p>}
           </div>
 
           {/* Email (Read-only) */}
           <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-foreground text-sm font-medium"
-            >
+            <label htmlFor="email" className="text-foreground text-sm font-medium">
               Email
             </label>
             <Input
@@ -149,10 +122,7 @@ export default function EditAdminModal({
 
           {/* Role */}
           <div className="space-y-2">
-            <label
-              htmlFor="role"
-              className="text-foreground text-sm font-medium"
-            >
+            <label htmlFor="role" className="text-foreground text-sm font-medium">
               Role
             </label>
             <div className="relative">
@@ -163,7 +133,7 @@ export default function EditAdminModal({
                   setRole(e.target.value);
                   if (errors.role) setErrors({ ...errors, role: undefined });
                 }}
-                className={`flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
                   errors.role ? "border-destructive" : ""
                 }`}
               >
@@ -176,16 +146,12 @@ export default function EditAdminModal({
                 <option value="Moderator">Moderator</option>
               </select>
             </div>
-            {errors.role && (
-              <p className="text-destructive text-xs">{errors.role}</p>
-            )}
+            {errors.role && <p className="text-destructive text-xs">{errors.role}</p>}
           </div>
 
           {/* Profile Image */}
           <div className="space-y-2">
-            <label className="text-foreground block text-sm font-medium">
-              Profile Image
-            </label>
+            <label className="text-foreground block text-sm font-medium">Profile Image</label>
             <div className="border-border hover:border-primary/50 rounded-lg border-2 border-dashed p-8 text-center transition-colors">
               <input
                 type="file"
@@ -212,9 +178,7 @@ export default function EditAdminModal({
                 ) : (
                   <>
                     <Upload className="text-muted-foreground h-8 w-8" />
-                    <span className="text-muted-foreground text-sm">
-                      Upload Image
-                    </span>
+                    <span className="text-muted-foreground text-sm">Upload Image</span>
                   </>
                 )}
               </label>
@@ -223,12 +187,7 @@ export default function EditAdminModal({
 
           {/* Submit Button */}
           <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              className="flex-1"
-            >
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
               Cancel
             </Button>
             <Button

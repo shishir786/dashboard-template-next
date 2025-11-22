@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, X } from "lucide-react";
@@ -45,9 +40,7 @@ export default function CreateCategoryModal({
     e.preventDefault();
 
     if (validateForm()) {
-      const filteredSubCategories = subCategories.filter(
-        (sub) => sub.trim() !== ""
-      );
+      const filteredSubCategories = subCategories.filter((sub) => sub.trim() !== "");
       onConfirm({
         name,
         subCategories: filteredSubCategories,
@@ -80,20 +73,15 @@ export default function CreateCategoryModal({
 
   return (
     <Dialog open={open} onOpenChange={handleClose} modal={false}>
-      <DialogContent className="sm:max-w-[500px] bg-background p-0 gap-0">
-        <DialogHeader className="bg-primary text-primary-foreground p-6 rounded-t-lg">
-          <DialogTitle className="text-xl font-semibold">
-            Create Category
-          </DialogTitle>
+      <DialogContent className="bg-background gap-0 p-0 sm:max-w-[500px]">
+        <DialogHeader className="bg-primary text-primary-foreground rounded-t-lg p-6">
+          <DialogTitle className="text-xl font-semibold">Create Category</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5 p-6">
           {/* Category Name */}
           <div className="space-y-2">
-            <label
-              htmlFor="name"
-              className="text-sm font-medium text-foreground"
-            >
+            <label htmlFor="name" className="text-foreground text-sm font-medium">
               Category Name
             </label>
             <Input
@@ -107,25 +95,19 @@ export default function CreateCategoryModal({
               }}
               className={errors.name ? "border-destructive" : ""}
             />
-            {errors.name && (
-              <p className="text-xs text-destructive">{errors.name}</p>
-            )}
+            {errors.name && <p className="text-destructive text-xs">{errors.name}</p>}
           </div>
 
           {/* Sub Categories */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">
-              Sub Categories
-            </label>
-            <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
+            <label className="text-foreground text-sm font-medium">Sub Categories</label>
+            <div className="max-h-[200px] space-y-2 overflow-y-auto pr-1">
               {subCategories.map((sub, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <Input
                     placeholder={`Sub category ${index + 1}`}
                     value={sub}
-                    onChange={(e) =>
-                      handleSubCategoryChange(index, e.target.value)
-                    }
+                    onChange={(e) => handleSubCategoryChange(index, e.target.value)}
                   />
                   {subCategories.length > 1 && (
                     <Button
@@ -154,17 +136,12 @@ export default function CreateCategoryModal({
 
           {/* Submit Button */}
           <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="flex-1"
-            >
+            <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
               Cancel
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground flex-1"
             >
               Create Category
             </Button>

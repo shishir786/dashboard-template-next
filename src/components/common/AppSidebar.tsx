@@ -1,5 +1,16 @@
 "use client";
-import { ChartBarStacked, LayoutDashboard, LogOut, PackageSearch, Podcast, RssIcon, Settings, User, Users, Wallet } from "lucide-react";
+import {
+  ChartBarStacked,
+  LayoutDashboard,
+  LogOut,
+  PackageSearch,
+  Podcast,
+  RssIcon,
+  Settings,
+  User,
+  Users,
+  Wallet,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
