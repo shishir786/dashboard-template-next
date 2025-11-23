@@ -186,6 +186,7 @@ const AppSidebar = () => {
             <Button type="button" variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
               Cancel
             </Button>
+            <Link href="/login">
             <Button
               type="button"
               onClick={() => {
@@ -198,6 +199,7 @@ const AppSidebar = () => {
             >
               Log Out
             </Button>
+            </Link>
           </div>
         </DialogContent>
       </Dialog>
