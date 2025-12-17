@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react";
-import UserDetailsModal from "@/components/modals/UserDetailsModal";
-import BlockUserModal from "@/components/modals/BlockUserModal";
+import UserDetailsModal from "@/app/users/UserDetailsModal";
+import BlockUserModal from "@/app/admins/BlockUserModal";
+
 
 const recentUsers = [
   {

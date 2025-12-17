@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Search, Eye, Trash2, ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import CreateBlogModal from "@/components/modals/CreateBlogModal";
+import CreateBlogModal from "./CreateBlogModal";
 
 type Blog = {
   id: string;

@@ -5,11 +5,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Search, Eye, Ban, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import BlockedUsersModal from "@/components/modals/BlockedUsersModal";
-import UserDetailsModal from "@/components/modals/UserDetailsModal";
-import BlockUserModal from "@/components/modals/BlockUserModal";
-import CreateAdminModal from "@/components/modals/CreateAdminModal";
-import EditAdminModal from "@/components/modals/EditAdminModal";
+import BlockedUsersModal from "../users/BlockedUsersModal";
+import UserDetailsModal from "../users/UserDetailsModal";
+import BlockUserModal from "./BlockUserModal";
+import CreateAdminModal from "./CreateAdminModal";
+import EditAdminModal from "./EditAdminModal";
 
 const seedAdmins = [
   {

@@ -4,9 +4,9 @@ import { useState } from "react";
 import { ArrowLeft, Plus, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import CreateFAQModal from "@/components/modals/CreateFAQModal";
-import EditFAQModal from "@/components/modals/EditFAQModal";
-import DeleteFAQModal from "@/components/modals/DeleteFAQModal";
+import CreateFAQModal from "./CreateFAQModal";
+import EditFAQModal from "./EditFAQModal";
+import DeleteFAQModal from "./DeleteFAQModal";
 
 type FAQ = {
   id: string;

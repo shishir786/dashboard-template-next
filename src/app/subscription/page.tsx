@@ -1,6 +1,6 @@
 "use client";
 
-import { ManageSubscriptionModal } from "@/components/modals/ManageSubscriptionModal";
+import { ManageSubscriptionModal } from "./ManageSubscriptionModal";
 import { Check, Crown, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 

@@ -5,9 +5,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Search, Eye, Ban, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import BlockedUsersModal from "@/components/modals/BlockedUsersModal";
-import UserDetailsModal from "@/components/modals/UserDetailsModal";
-import BlockUserModal from "@/components/modals/BlockUserModal";
+import BlockedUsersModal from "./BlockedUsersModal";
+import UserDetailsModal from "./UserDetailsModal";
+import BlockUserModal from "../admins/BlockUserModal";
+
 
 const seedUsers = [
   {

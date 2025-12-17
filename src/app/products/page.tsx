@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Search, Plus, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import CreateProductModal from "@/components/modals/CreateProductModal";
-import EditProductModal from "@/components/modals/EditProductModal";
+import CreateProductModal from "./CreateProductModal";
+import EditProductModal from "./EditProductModal";
 import {
   Dialog,
   DialogContent,

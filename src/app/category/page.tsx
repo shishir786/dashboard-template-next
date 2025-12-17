@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Search, Plus, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import CreateCategoryModal from "@/components/modals/CreateCategoryModal";
-import EditCategoryModal from "@/components/modals/EditCategoryModal";
+import CreateCategoryModal from "./CreateCategoryModal";
+import EditCategoryModal from "./EditCategoryModal";
 import {
   Dialog,
   DialogContent,
