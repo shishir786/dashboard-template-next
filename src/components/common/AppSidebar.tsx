@@ -94,11 +94,11 @@ const AppSidebar = () => {
   };
 
   return (
-    <Sidebar className="mt-0 ml-0 md:mt-5 md:ml-5 md:rounded-t-2xl" collapsible="icon">
+    <Sidebar className="mt-0 ml-0 pb-7 md:mt-5 md:ml-5 md:rounded-t-2xl" collapsible="icon">
       {/* sidebar header */}
       <SidebarHeader className="flex flex-col items-center py-4 md:py-6">
         <div className="flex w-full flex-col items-center gap-2 md:gap-3">
-          <div className="mt-3 flex h-[60px] w-[60px] items-center justify-center group-data-[collapsible=icon]:mt-0 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 md:mt-6 md:h-[80px] md:w-[80px]">
+          <div className="mt-3 flex h-15 w-15 items-center justify-center group-data-[collapsible=icon]:mt-0 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 md:mt-6 md:h-20 md:w-20">
             <Image
               src="/logo.png"
               alt="Logo"
@@ -151,12 +151,14 @@ const AppSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              className="h-12 text-base font-medium md:h-16 md:text-lg"
+              className="h-12 border-2 border-red-600 text-base font-medium text-red-500 transition-colors hover:border-red-700 hover:bg-red-500 hover:text-white md:h-16 md:text-lg"
               onClick={() => setLogoutModalOpen(true)}
             >
               <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0 md:gap-4">
-                <LogOut className="h-6 w-6 text-red-600 group-data-[collapsible=icon]:h-9 group-data-[collapsible=icon]:w-9 md:h-7 md:w-7" />
-                <span className="text-base font-medium text-red-500 md:text-lg">Log Out</span>
+                <LogOut className="h-6 w-6 group-data-[collapsible=icon]:h-9 group-data-[collapsible=icon]:w-9 md:h-7 md:w-7" />
+                <span className="text-base font-medium group-data-[collapsible=icon]:hidden md:text-lg">
+                  Log Out
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -165,7 +167,7 @@ const AppSidebar = () => {
 
       {/* Logout Confirmation Modal */}
       <Dialog open={logoutModalOpen} onOpenChange={setLogoutModalOpen} modal={false}>
-        <DialogContent className="bg-background sm:max-w-[425px]">
+        <DialogContent className="bg-background sm:max-w-106.25">
           <DialogHeader className="space-y-3">
             <div className="bg-destructive/10 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
               <LogOut className="text-destructive h-6 w-6" />
@@ -183,22 +185,27 @@ const AppSidebar = () => {
           </div>
 
           <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setLogoutModalOpen(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
             <Link href="/login">
-            <Button
-              type="button"
-              onClick={() => {
-                // Add your logout logic here
-                console.log("User logged out");
-                // Example: router.push('/login');
-                setLogoutModalOpen(false);
-              }}
-              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground flex-1"
-            >
-              Log Out
-            </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                  // Example: router.push('/login');
+                  setLogoutModalOpen(false);
+                }}
+                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground flex-1"
+              >
+                Log Out
+              </Button>
             </Link>
           </div>
         </DialogContent>

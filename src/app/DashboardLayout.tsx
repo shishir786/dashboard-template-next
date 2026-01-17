@@ -11,9 +11,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [defaultOpen, setDefaultOpen] = useState(true);
 
   // Check if current route is an auth route
-  const isAuthRoute = pathname.startsWith("/login") ||
-                      pathname.startsWith("/forgot-password") ||
-                      pathname.startsWith("/reset-password");
+  const isAuthRoute =
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/reset-password");
 
   useEffect(() => {
     // Get sidebar state from cookie
