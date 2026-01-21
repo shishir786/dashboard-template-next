@@ -3,10 +3,37 @@
 import { useEffect, useRef, useState } from "react";
 import { Search, Send, ArrowLeft } from "lucide-react";
 
+// Type definitions
+interface Participant {
+  _id: string;
+  fullname: string;
+  avatar: string;
+}
+
+interface Message {
+  id?: string;
+  _id?: string;
+  text: string;
+  createdAt: number;
+  msgByUserId: string;
+}
+
+interface LastMessage {
+  text: string;
+  createdAt: number;
+}
+
+interface Conversation {
+  _id: string;
+  participants: Participant[];
+  lastMessage: LastMessage;
+  messages: Message[];
+}
+
 export default function MessagePage() {
   const demoCurrentUserId = "me";
 
-  const [conversations, setConversations] = useState(() => [
+  const [conversations, setConversations] = useState<Conversation[]>(() => [
     {
       _id: "c1",
       participants: [
@@ -59,14 +86,14 @@ export default function MessagePage() {
     },
   ]);
 
-  const [selectedConversationId, setSelectedConversationId] = useState(
+  const [selectedConversationId, setSelectedConversationId] = useState<string | null>(
     conversations[0]?._id || null,
   );
-  const [showChat, setShowChat] = useState(false);
-  const [newMessage, setNewMessage] = useState("");
-  const [search, setSearch] = useState("");
+  const [showChat, setShowChat] = useState<boolean>(false);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
-  const messagesContainerRef = useRef(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!selectedConversationId && conversations.length)
@@ -87,8 +114,8 @@ export default function MessagePage() {
   }, [selectedConversationId, conversations]);
 
   const filteredConvs = conversations.filter((c) => {
-    const other = (c.participants || []).find((p) => p._id !== demoCurrentUserId) || {};
-    return other.fullname?.toLowerCase().includes(search.toLowerCase());
+    const other = (c.participants || []).find((p) => p._id !== demoCurrentUserId);
+    return other?.fullname?.toLowerCase().includes(search.toLowerCase());
   });
 
   const selectedConversation = conversations.find((c) => c._id === selectedConversationId) || null;
@@ -121,7 +148,7 @@ export default function MessagePage() {
     // keep mobile view open
   };
 
-  const handleConversationSelect = (id) => {
+  const handleConversationSelect = (id: string) => {
     setSelectedConversationId(id);
     setShowChat(true);
   };
@@ -152,7 +179,7 @@ export default function MessagePage() {
 
           <div className="flex h-full flex-1 flex-col gap-2 overflow-y-auto">
             {filteredConvs.map((c) => {
-              const other = (c.participants || []).find((p) => p._id !== demoCurrentUserId) || {};
+              const other = (c.participants || []).find((p) => p._id !== demoCurrentUserId);
               return (
                 <div
                   key={c._id}
@@ -161,8 +188,8 @@ export default function MessagePage() {
                 >
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gray-200">
                     <img
-                      src={other.avatar || ""}
-                      alt={other.fullname}
+                      src={other?.avatar || ""}
+                      alt={other?.fullname || "Unknown"}
                       className="h-full w-full object-cover"
                     />
                   </div>
@@ -170,7 +197,7 @@ export default function MessagePage() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h3 className="text-foreground truncate text-sm font-semibold">
-                          {other.fullname || "Unknown"}
+                          {other?.fullname || "Unknown"}
                         </h3>
                         <p className="text-muted-foreground truncate text-xs">
                           {c.lastMessage?.text || ""}
@@ -199,13 +226,11 @@ export default function MessagePage() {
               <ArrowLeft className="h-5 w-5 text-[#1A1A1A]" />
             </button>
             <h2 className="text-foreground truncate text-lg font-medium">
-              {(selectedConversation &&
-                (
-                  (selectedConversation.participants || []).find(
+              {selectedConversation
+                ? (selectedConversation.participants || []).find(
                     (p) => p._id !== demoCurrentUserId,
-                  ) || {}
-                ).fullname) ||
-                "No conversation selected"}
+                  )?.fullname || "Unknown"
+                : "No conversation selected"}
             </h2>
           </div>
 
