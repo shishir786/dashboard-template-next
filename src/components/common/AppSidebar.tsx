@@ -4,6 +4,7 @@ import {
   ChartBarStacked,
   LayoutDashboard,
   LogOut,
+  MessageSquareWarning,
   PackageSearch,
   Podcast,
   RssIcon,
@@ -73,6 +74,11 @@ const items = [
     title: "Blog",
     url: "/blogs",
     icon: RssIcon,
+  },
+  {
+    title: "Reports",
+    url: "/reports",
+    icon: MessageSquareWarning,
   },
   {
     title: "Settings",
