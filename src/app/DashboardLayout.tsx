@@ -14,7 +14,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const isAuthRoute =
     pathname.startsWith("/login") ||
     pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password");
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/verify-otp");
 
   useEffect(() => {
     // Get sidebar state from cookie
